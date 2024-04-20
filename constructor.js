@@ -145,6 +145,8 @@ function add(e, data) {
 
 		place.parentElement.insertBefore(evt.target,place);
 		document.getElementById("hover").appendChild(place);
+
+		compile();
 	});
 	li.addEventListener("dragover", (evt) => {
 		evt.preventDefault();

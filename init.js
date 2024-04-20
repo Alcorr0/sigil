@@ -44,6 +44,8 @@ var time = 0;
 var step = 0.02;
 var translateX = 0;
 var translateY = 0;
+var skewX = 0;
+var skewY = 0;
 var scale = 1;
 
 var isStop = false;

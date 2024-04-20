@@ -137,7 +137,9 @@ function graphNode(ra, rb) {
 			//два круга
 			[{"type":"Width","width":d/4,"id":"e:"+id++,"children":[{"type":"Circle","radius":ra+d/4,"angle A":"0","angle B":"PI*2","id":"e:"+id++},{"type":"Circle","radius":ra+3*d/4,"angle A":"0","angle B":"PI*2","id":"e:"+id++}]}],
 			//текст
-			[{"type":"Rotate","angle":"time*"+(Math.random()*8-4),"id":"e:"+id++,"children":[{"type":"Random Letters Circle","radius":c,"width":d,"segments":Math.floor(2*Math.PI*c/d),"text":"αβγδεζηθικλμνξοπρστυφχψω ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(secs*2-0.5)","angle":"0","id":"e:"+id++}]}]
+			[{"type":"Rotate","angle":"time*"+(Math.random()*8-4),"id":"e:"+id++,"children":[{"type":"Random Letters Circle","radius":c,"width":d,"segments":Math.floor(2*Math.PI*c/d),"text":"αβγδεζηθικλμνξοπρστυφχψω ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(secs*2-0.5)","angle":"0","id":"e:"+id++}]}],
+			//кубики
+			[{"type":"Rotate","angle":"time*"+(Math.random()*8-4),"id":"e:"+id++,"children":[{"type":"Random Letters Circle","radius":c,"width":d,"segments":Math.floor(2*Math.PI*c/d),"text":"▖▗▘▙▚▛▜▝▞▟■","seed":"Id(87)","angle":"0","id":"e:"+id++}]}]
 		],
 		[//only thick
 			//лучи с буквами
@@ -225,6 +227,7 @@ function generate() {
 	json = JSON.stringify(data, (k,v) => (typeof v === 'object' || typeof v === 'boolean')? v: v.toString());
 
 	exp();
+	imp();
 
 	if (isStop) {
 		if (json.includes("time") || json.includes("secs"))

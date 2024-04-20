@@ -11,13 +11,19 @@ function controlsUpdate(el) {
 			isStop = true;		
 		break;
 	case 'translateX':
-		translateX = el.value;
+		translateX = Number(el.value);
 		break;
 	case 'translateY':
-		translateY = el.value;
+		translateY = Number(el.value);
+		break;
+	case 'skewX':
+		skewX = Number(el.value);
+		break;
+	case 'skewY':
+		skewY = Number(el.value);
 		break;
 	case 'scale':
-		scale = el.value;
+		scale = Number(el.value);
 		break;
 	}
 	if (isStop)
@@ -34,13 +40,23 @@ draw = function() {
 	ctx.fillStyle = "#ffffff";
 	// ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 //transform
+	// console.log(translateX,translateY,skewX,skewY,scale);
+	console.log(
+		scale,
+		skewY,
+		skewX,
+		scale,
+		(translateX+2.0-scale*2.0-skewX)*window.innerWidth/4,
+		(translateY+0.5-scale/2.0-skewY)*window.innerHeight
+	);
+	// ctx.transform(2,0,0,2,100,100);
 	ctx.transform(
 		scale,
-		translateY,
-		translateX,
+		skewY,
+		skewX,
 		scale,
-		(2-scale*2-translateX)*window.innerWidth/4,
-		(0.5-scale/2-translateY)*window.innerHeight  
+		(translateX+2.0-scale*2-skewX)*window.innerWidth/4,
+		(translateY+0.5-scale/2-skewY)*window.innerHeight
 	);
 
 
