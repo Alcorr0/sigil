@@ -10,9 +10,10 @@ function getGraph() {
 	*/
 
 	//set nodes
+	var positions = [];
 	for (var i=0,j=0; i<7; i++) {
-		if(i!=6 && Math.random()>0.2) continue;
-
+		if(i!=6 && Math.random()>0.3) continue;
+		positions.push(i);
 		const R = 500,
 			  dmax = 200,
 			  Rd = -dmax+Math.random()*dmax/2,
@@ -31,22 +32,27 @@ function getGraph() {
 			r:r
 		};
 	}
+	console.log(positions);
 
 	//set lines
-	for (var i=0; i<graph.length; i++) {
-		var go = [];
-		if(Math.random()>0)
-			if(i<graph.length-1)
-				go.push(i+1);
-			else if(graph.length>2 && !graph[0].go.includes(i))
-				go.push(0);
+	const last = graph.length-1;
+	if(last==1)
+		graph[0].go=[1];
+	else if(graph.length!=1)
+		for (var i=0; i<last; i++) {
+			var go = [];
 
-		if(Math.random()>0) {
-			const r = Math.round(Math.random()*(graph.length-1));
-			if(r!=i && !graph[r].go.includes(i) && !go.includes(r)) go.push(r);
+			//around
+			const t = i<last-1? i+1: 0;
+			if(t!=0||last!=2)
+				if(Math.abs(positions[i]-positions[t])!=3)
+					go.push(t);
+			//to center
+			if(Math.random()>0)
+				go.push(last);
+
+			graph[i].go = go;
 		}
-		graph[i].go = go;
-	}
 	return graph;
 }
 function graphLines(a, b) {
@@ -54,20 +60,21 @@ function graphLines(a, b) {
 	const dx = b.x-a.x;
 	const dy = b.y-a.y;
 	const an = Math.atan2(dy,dx);
-	const l = Math.sqrt(dx*dx+dy*dy);
-
+	const l  = Math.sqrt(dx*dx+dy*dy);
 	const len = l-a.r-b.r;
+	const s  = Math.floor(len/20);
+
 	const lines = [
 		//lines
 		[{"type":"Width","width":"5","id":"e:"+id++,"children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0","id":"e:"+id++}]},{"type":"Line","x":"10","y":"10*sin(time+Id(95))","dx":len-20,"dy":"0","id":"e:"+id++},{"type":"Line","x":"10","y":"-10*sin(time+Id(94))","dx":len-20,"dy":"0","id":"e:"+id++}],
 		//ladder
-		[{"type":"Line","x":"0","y":"10","dx":len,"dy":"0","id":"e:"+id++},{"type":"Line","x":"0","y":"-10","dx":len,"dy":"0","id":"e:"+id++},{"type":"Rotate","angle":"PI/2","id":"e:"+id++,"children":[{"type":"To Line","length":len,"segments":Math.floor(len/20),"offset":"1","angle":"0","is alternately":false,"id":"e:"+id++,"children":[{"type":"Line","x":"-10","y":"0","dx":"20","dy":"0","id":"e:"+id++}]}]},{"type":"Move","x":"10","y":"0","id":"e:"+id++,"children":[{"type":"Random Text","width":"20","text":"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":Math.floor(len/20),"seed":"secs+Id(99)","angle":"PI/2","id":"e:"+id++}]}],
+		[{"type":"Line","x":"0","y":"10","dx":len,"dy":"0","id":"e:"+id++},{"type":"Line","x":"0","y":"-10","dx":len,"dy":"0","id":"e:"+id++},{"type":"Rotate","angle":"PI/2","id":"e:"+id++,"children":[{"type":"To Line","length":s*20,"segments":s,"offset":"1","angle":"0","is alternately":false,"id":"e:"+id++,"children":[{"type":"Line","x":"-10","y":-(len-s*20)/2,"dx":"20","dy":"0","id":"e:"+id++}]}]},{"type":"Move","x":10+(len-s*20)/2,"y":"0","id":"e:"+id++,"children":[{"type":"Random Text","width":"20","text":"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":s,"seed":"secs+Id(99)","angle":"PI/2","id":"e:"+id++}]}],
 		//chain
-		[{"type":"Rotate","angle":"PI/2","id":"e:"+id++,"children":[{"type":"Move","x":"0","y":"-10","id":"e:"+id++,"children":[{"type":"To Line","length":len,"segments":Math.floor(len/20),"offset":"0","angle":"0","is alternately":false,"id":"e:"+id++,"children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"PI*2","id":"e:"+id++},{"type":"Filled Circle","radius":"4*(nsin(time+Id(98)))","angle A":"0","angle B":"PI*2","id":"e:"+id++}]}]}]}],
+		[{"type":"Rotate","angle":"PI/2","id":"e:"+id++,"children":[{"type":"Move","x":"0","y":"-10","id":"e:"+id++,"children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","is alternately":false,"id":"e:"+id++,"children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"PI*2","id":"e:"+id++},{"type":"Filled Circle","radius":"4*(nsin(time+Id(98)))","angle A":"0","angle B":"PI*2","id":"e:"+id++}]}]}]}],
 		//dna
-		[{"type":"Width","width":"5","id":"e:"+id++,"children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0","id":"e:"+id++}]},{"type":"Rotate","angle":"PI/2","id":"e:"+id++,"children":[{"type":"To Line","length":len,"segments":Math.floor(len/20),"offset":"0","angle":"0","is alternately":false,"id":"e:"+id++,"children":[{"type":"Move","x":"10*sin(time+Id(97)/2)","y":"-10","id":"e:"+id++,"children":[{"type":"Filled Circle","radius":"4","angle A":"0","angle B":"PI*2","id":"e:"+id++}]},{"type":"Move","x":"-10*sin(time+Id(96)/2)","y":"-10","id":"e:"+id++,"children":[{"type":"Filled Circle","radius":"4","angle A":"0","angle B":"PI*2","id":"e:"+id++}]}]}]}],
+		[{"type":"Width","width":"5","id":"e:"+id++,"children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0","id":"e:"+id++}]},{"type":"Rotate","angle":"PI/2","id":"e:"+id++,"children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","is alternately":false,"id":"e:"+id++,"children":[{"type":"Move","x":"10*sin(time+Id(97)/2)","y":"-10","id":"e:"+id++,"children":[{"type":"Filled Circle","radius":"4","angle A":"0","angle B":"PI*2","id":"e:"+id++}]},{"type":"Move","x":"-10*sin(time+Id(96)/2)","y":"-10","id":"e:"+id++,"children":[{"type":"Filled Circle","radius":"4","angle A":"0","angle B":"PI*2","id":"e:"+id++}]}]}]}],
 		//dna lines
-		[{"type":"Rotate","angle":"PI/2","id":"e:"+id++,"children":[{"type":"To Line","length":len,"segments":Math.floor(len/10),"offset":"0","angle":"0","is alternately":false,"id":"e:"+id++,"children":[{"type":"Line","x":"-10*sin(time+Id(90)/2)","y":"0","dx":"20*sin(time+Id(89)/2)","dy":"0","id":"e:"+id++}]}]}]
+		[{"type":"Rotate","angle":"PI/2","id":"e:"+id++,"children":[{"type":"To Line","length":len,"segments":s*2,"offset":"0","angle":"0","is alternately":false,"id":"e:"+id++,"children":[{"type":"Line","x":"-10*sin(time+Id(90)/2)","y":"0","dx":"20*sin(time+Id(89)/2)","dy":"0","id":"e:"+id++}]}]}]
 	];
 	var line = lines[Math.floor(Math.random()*lines.length)];
 	
@@ -177,13 +184,16 @@ function graphNodeBack(r) {
 
 	return {"type":"Width","width":"1","id":"e:3","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","id":"e:4","children":line}]};
 }
+// function bigBack() {
+// 	return {"type":"Width","width":"1","id":"e:3","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","id":"e:4","children":line}]};
+// }
 function generate() {
 	var data = [];
 	id=0;
 	const graph = getGraph();
 
 	//interp graph
-	for (var g=0,i=0; g<graph.length; g++) {
+	for (var g=0; g<graph.length; g++) {
 		var nodes = [];
 
 		//lines
@@ -215,14 +225,15 @@ function generate() {
 			nodes = nodes.concat(graphNode(prev_r, cr));
 		}
 
-		data[i++] = {
+		data.push({
 			"type": "Move",
 			"x": graph[g].x,
 			"y": graph[g].y,
 			"id": "e:"+id++,
 			"children": nodes
-		};
+		});
 	}
+	// if(Math.random()>0.3) nodes.push(bigBack());
 
 	json = JSON.stringify(data, (k,v) => (typeof v === 'object' || typeof v === 'boolean')? v: v.toString());
 

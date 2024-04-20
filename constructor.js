@@ -69,6 +69,7 @@ function addN(type) {
 	showAdd(current_add);
 	current_add.type = type;
 	add(current_add);
+	compile();
 }
 function add(e, data) {
 	var type = e.type;
@@ -206,6 +207,7 @@ function clr(e) {
 	if (e) {
 		e.innerHTML = "";
 		e.remove();
+		compile();
 	}
 	else
 		document.getElementsByClassName("childrenList")[0].innerHTML = "";

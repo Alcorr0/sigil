@@ -40,16 +40,6 @@ draw = function() {
 	ctx.fillStyle = "#ffffff";
 	// ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 //transform
-	// console.log(translateX,translateY,skewX,skewY,scale);
-	console.log(
-		scale,
-		skewY,
-		skewX,
-		scale,
-		(translateX+2.0-scale*2.0-skewX)*window.innerWidth/4,
-		(translateY+0.5-scale/2.0-skewY)*window.innerHeight
-	);
-	// ctx.transform(2,0,0,2,100,100);
 	ctx.transform(
 		scale,
 		skewY,

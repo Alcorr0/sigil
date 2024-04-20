@@ -291,13 +291,13 @@
 			<button id="record" onclick="startRecord()">record</button>
 			<hr>
 			<button id="show" onclick="show()">edit</button>
-			<button id="compile" onclick="compile()">compile</button>
-			<button id="clear"   onclick="clr()">clear</button>
-			<hr>
+			<!-- <button id="compile" onclick="compile()">compile</button> -->
+			<button id="clear"   onclick="clr();compile()">clear</button>
 			<!-- <button id="export" onclick="exp()">export</button> -->
-			<button id="generate" onclick="generate()">generate</button>
 			<input  id="shareInout" type="text" name="share" value='[{"type":"Width","width":"20","id":"e:0","children":[{"type":"Circle","radius":"80","angle A":"0","angle B":"PI*2","id":"e:1"}]},{"type":"Width","width":"5","id":"e:2","children":[{"type":"Circle","radius":"50","angle A":"0","angle B":"PI*2","id":"e:3"}]},{"type":"Move","x":"0","y":"0","id":"e:4","children":[{"type":"Random Text","width":"70","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"secs","angle":"0","id":"e:5"}]},{"type":"Color RGB","red":"0","green":"0","blue":"0","alpha":"1","id":"e:6","children":[{"type":"Width","width":"1","id":"e:7","children":[{"type":"Rotate","angle":"PI/4+time","id":"e:8","children":[{"type":"Radial Circle","radius A":"80-20","radius B":"80+20","segments":"4","angle A":"0","angle B":"PI*2","id":"e:9"}]}]}]},{"type":"Width","width":"7","id":"e:10","children":[{"type":"Circle","radius":"200","angle A":"0","angle B":"PI*2","id":"e:11"},{"type":"Circle","radius":"185","angle A":"0","angle B":"PI*2","id":"e:12"}]},{"type":"Width","width":"2","id":"e:13","children":[{"type":"Circle","radius":"250","angle A":"0","angle B":"PI*2","id":"e:14"}]},{"type":"Rotate","angle":"time","id":"e:15","children":[{"type":"Random Letters Circle","radius":"60","width":"10","segments":"20","text":"αβγδεζηθικλμνξοπρστυφχψω ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(secs*2-0.5)","angle":"0","id":"e:16"}]},{"type":"Rotate","angle":"-time","id":"e:17","children":[{"type":"Random Letters Circle","radius":"140","width":"10","segments":"100","text":"αβγδεζηθικλμνξοπρστυφχψω","seed":"floor(secs*2-0.5)","angle":"0","id":"e:18"}]},{"type":"Rotate","angle":"time","id":"e:19","children":[{"type":"To Circle","is alternately":false,"radius":"140","segments":"4","angle A":"0","angle B":"PI*2","id":"e:20","children":[{"type":"Color RGB","red":"0","green":"0","blue":"0","alpha":"1","id":"e:21","children":[{"type":"Filled Circle","radius":"65","angle A":"0","angle B":"PI*2","id":"e:22"}]},{"type":"Circle","radius":"65","angle A":"0","angle B":"PI*2","id":"e:23"},{"type":"Width","width":"2","id":"e:24","children":[{"type":"Circle","radius":"50","angle A":"0","angle B":"PI*2","id":"e:25"},{"type":"Circle","radius":"40","angle A":"0","angle B":"PI*2","id":"e:26"},{"type":"To Circle","is alternately":false,"radius":"44","segments":"4","angle A":"time/2","angle B":"PI*2","id":"e:27","children":[{"type":"Move","x":"-10","y":"0","id":"e:64","children":[{"type":"Random Text","width":"10","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"3","seed":"secs/2-Id(0)","angle":"0","id":"e:29"}]}]},{"type":"Rotate","angle":"-time","id":"e:31","children":[{"type":"Letters Circle","radius":"30","width":"10","text":"αβγδεζ      ","segments":"4","angle":"0","id":"e:32"}]},{"type":"Random Text","width":"40","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"secs*4+Id(1)","angle":"0","id":"e:34"}]}]},{"type":"To Circle","is alternately":false,"radius":"205","segments":"4","angle A":"0","angle B":"PI*2","id":"e:35","children":[{"type":"Color RGB","red":"0","green":"0","blue":"0","alpha":"1","id":"e:36","children":[{"type":"Filled Ellipse","radius A":"20","radius B":"10","angle":"0","id":"e:37"}]}]}]},{"type":"Width","width":"1","id":"e:38","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","id":"e:39","children":[{"type":"Circle","radius":"130","angle A":"0","angle B":"PI*2","id":"e:40"}]}]},{"type":"Width","width":"1","id":"e:41","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","id":"e:42","children":[{"type":"Polygon","radius":"215","segments":"3","max":"-1","id":"e:43"},{"type":"Rotate","angle":"PI/6","id":"e:44","children":[{"type":"To Circle","is alternately":false,"radius":"0","segments":"3","angle A":"0","angle B":"PI*2","id":"e:45","children":[{"type":"Circle","radius":"215","angle A":"0","angle B":"PI/3","id":"e:46"}]},{"type":"To Circle","is alternately":false,"radius":"215","segments":"3","angle A":"0","angle B":"PI*2","id":"e:47","children":[{"type":"Color RGB","red":"0","green":"0","blue":"0","alpha":"1","id":"e:48","children":[{"type":"Filled Circle","radius":"10","angle A":"0","angle B":"PI*2","id":"e:49"}]},{"type":"Circle","radius":"10","angle A":"0","angle B":"PI*2","id":"e:50"}]}]},{"type":"Rotate","angle":"PI/3","id":"e:51","children":[{"type":"Polygon","radius":"130","segments":"3","max":"-1","id":"e:52"}]},{"type":"Rotate","angle":"-time","id":"e:53","children":[{"type":"Polygon","radius":"130","segments":"6","max":"-1","id":"e:54"}]}]}]},{"type":"Rotate","angle":"time","id":"e:55","children":[{"type":"Width","width":"1","id":"e:56","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","id":"e:57","children":[{"type":"Radial Circle","radius A":"50","radius B":"100","segments":"4","angle A":"0","angle B":"PI*2","id":"e:58"},{"type":"Radial Circle","radius A":"182","radius B":"250","segments":"8","angle A":"0","angle B":"PI*2","id":"e:59"}]}]},{"type":"Rotate","angle":"0.25","id":"e:60","children":[{"type":"Random Letters Circle","radius":"225","width":"30","segments":"8","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(secs*2-0.5)","angle":"0","id":"e:61"}]}]},{"type":"Rotate","angle":"-time","id":"e:62","children":[{"type":"Random Letters Circle","radius":"300","width":"20","segments":"64","text":"▖▗▘▙▚▛▜▝▞▟■","seed":"secs*6","angle":"0","id":"e:63"}]}]'>
 			<button id="import" onclick="imp()">import</button>
+			<hr>
+			<button id="generate" onclick="generate()">generate</button>
 			<hr>
 			<label>Speed</label>
 			<input id="speed" type="range" name="speed"           oninput="controlsUpdate(this)" min="0"    max="1"   step="0.01">
@@ -349,115 +349,6 @@
 		</div>
 		<img id="imgInfo" src="">
 	</div>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.2/three.min.js"></script>
-	<script id="vertexShader" type="x-shader/x-vertex">
-		uniform float time;
-		uniform vec2 resolution;
-		void main()	{
-			gl_Position = vec4( position, 1.0 );
-		}
-	</script>
-	<script id="fragmentShader" type="x-shader/x-fragment">
-		#define TPI 6.28318530718
-
-		uniform float     time;
-		uniform vec2      resolution;
-		uniform sampler2D texture1;
-
-		uniform float     blurRadius;
-		uniform float     blurBrightness;
-		uniform float     blurColor;
-		
-		uniform vec2      translate;
-		uniform float     scale;
-
-		mat2 rotate2d(float _angle){
-			return mat2(cos(_angle),-sin(_angle),
-						sin(_angle), cos(_angle));
-		}
-
-		vec3 rgb2hsv(vec3 c)
-		{
-			vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
-			vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
-			vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
-
-			float d = q.x - min(q.w, q.y);
-			float e = 1.0e-10;
-			return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
-		}
-		vec3 hsv2rgb(vec3 c)
-		{
-			vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-			vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-			return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-		}
-
-		vec4 invert(vec4 color) {
-			//vec4 color = texture2D(texture1, uv);
-			return vec4(1.-color.r,1.-color.g,1.-color.b,color.a);
-		}
-		vec4 blur(vec2 uv) {
-			float Directions = 16.0;
-			float Quality = 5.0;
-			vec2 Radius = blurRadius/resolution.xy;
-			float k = Quality * Directions - 15.0;
-			vec4 Color = texture2D(texture1, uv);
-			Color = (Color*2.)-1.;
-
-			for(float d=0.0; d<TPI; d+=TPI/Directions)
-			{
-				for(float i=1.0/Quality; i<=1.0; i+=1.0/Quality)
-				{
-					Color += texture2D(texture1, uv+vec2(cos(d),sin(d))*Radius*i)*2.-1.;		
-				}
-			}
-			Color /= Quality * Directions - 15.0;
-			Color = (Color+1.)/2.;
-			return Color;
-		}
-
-		vec2 trans(vec2 uv) {
-			uv-=vec2(.5,.5);
-			mat2 transform = mat2(1.,             0.-translate.x,
-								  0.+translate.y, 1.);
-			uv *= transform;
-			uv+=vec2(.5,.5);
-			return uv;
-		}
-		vec2 scle(vec2 uv) {
-			uv-=vec2(.5,.5);
-			uv *= scale;
-			uv+=vec2(.5,.5);
-			return uv;
-		}
-
-		void main()	{
-			vec2 uv = gl_FragCoord.xy / resolution.xy;
-
-			if (translate != vec2(0.))
-				uv = trans(uv);
-			//if (scale != 0.)
-				//uv = scle(uv);
-
-			vec4 orig = texture2D(texture1,uv);
-			if (blurBrightness!=0. && blurRadius!=0.) {
-				vec4 blured = blur(uv);
-				//blured.rgb *= blurBrightness;
-
-				vec3 hsv = rgb2hsv(blured.rgb);
-				if (blurColor != 0.0) hsv.g = 1.0;
-				hsv.r += blurColor;
-				hsv.b *= blurBrightness;
-				blured.rgb = hsv2rgb(hsv);
-
-				orig = max(blured,orig);
-			}
-			gl_FragColor = orig;
-		}
-	</script>
-
 	<script type="text/javascript" src="init.js"></script>
 	<script type="text/javascript" src="functions.js"></script>
 	<script type="text/javascript" src="parse.js"></script>
