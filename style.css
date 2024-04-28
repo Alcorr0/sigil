@@ -58,6 +58,7 @@ canvas {
 	border-radius: 10px;
 	width: fit-content;
 	block-size: fit-content;
+	padding-top: 10px;
 	padding-right: 10px;
 	max-height: 95vh;
 	min-width: 200px;
@@ -87,13 +88,17 @@ ul {
 	list-style: none;
 	padding-left: 0;
 }
-.childrenList{
+.childrenList {
 	border-radius: 5px;
   margin: 5px 0 10px 20px;
 }
 .childrenList:not(:has(li)) {
   border: solid 2px #8888;
   min-height: 20px;
+}
+#hover {
+	height: 0;
+  margin: 0;
 }
 .childrenList > li,
 #hover > li{
@@ -108,6 +113,14 @@ ul {
 li {
 	padding-bottom: 2px;
 	transition: transform ease-in 0.3s;
+}
+.nodeName{
+  border-radius: 5px;
+  padding: 3px 7px;
+}
+.nodeName:hover{
+	border: solid 2px #888;
+  padding: 1px 5px;
 }
 
 #hover > #place{
@@ -257,7 +270,7 @@ option:hover{
 }
 #addMenu.open{
 	padding: 10px 20px;
-	border: solid 2px #000;
+	opacity: 1;
 }
 #addMenu.open > *{
 	height: 20px;
@@ -271,10 +284,13 @@ option:hover{
 	display: flex;
   width: 100px;
   flex-direction: column;
+	border: solid 2px #000;
   border-radius: 10px;
 	background-color: #fff4;
 	height: fit-content;
 	padding: 0 20px;
+	opacity: 0;
+
 	transition: all 1s;
 }
 #addMenu .remove{
@@ -325,4 +341,18 @@ option:hover{
 }
 #infoSelect {
 	margin-bottom: 10px;
+}
+
+
+@media screen and (max-width: 600px) {
+  #addMenu {
+  	position: absolute;
+  }
+  .childrenList,
+  .childrenList > li {
+  	margin: 5px 0;
+  }
+  #addMenu {
+  	background-color: #444;
+  }
 }

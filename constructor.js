@@ -122,12 +122,14 @@ function add(e, data) {
 	list.appendChild(li);
 
 	//draggable
-	li.draggable = true;
+	li.getElementsByClassName('nodeName')[0].draggable = true;
 	li.addEventListener("dragstart", (evt) => {
-		evt.target.style.position = "absolute";
-		evt.target.classList.add("selected");
+		const element = evt.target.parentElement.parentElement;
 
-		document.getElementById("hover").appendChild(evt.target);
+		element.style.position = "absolute";
+		element.classList.add("selected");
+
+		document.getElementById("hover").appendChild(element);
 
 		var crt = document.createElement('div');
 		crt.classList.add("ghost");
@@ -136,15 +138,20 @@ function add(e, data) {
 		
 	});
 	li.addEventListener("dragend", (evt) => {
-		evt.target.style.position = "unset";
-		evt.target.classList.remove("selected");
+		const element = evt.target.parentElement.parentElement;
+		element.style.position = "unset";
+		element.classList.remove("selected");
 		const place = document.getElementById("place");
 
 		var ghosts = document.getElementsByClassName("ghost");
 		while(ghosts[0]) document.body.removeChild(ghosts[0]);
 
 
-		place.parentElement.insertBefore(evt.target,place);
+		if (document.querySelectorAll("#hover #place").length > 0)
+			document.getElementsByClassName("root")[0].appendChild(element);
+		else
+			place.parentElement.insertBefore(element,place);
+		
 		document.getElementById("hover").appendChild(place);
 
 		compile();
@@ -164,6 +171,7 @@ function add(e, data) {
 			return;
 		}
 
+		// console.log(currentElement.classList);
 		if(currentElement.classList.contains("childrenList")) {
 			currentElement.appendChild(place);
 			return;
