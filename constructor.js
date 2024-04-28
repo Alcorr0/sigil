@@ -36,8 +36,8 @@ function compileNode(node) {
 
 		data[p_name] = p_value;
 	}
-	data["id"] = node.parentElement.id;
-	console.log(data);
+	// data["id"] = node.parentElement.id;
+	
 	return data;
 }
 function compileChildren(list) {
