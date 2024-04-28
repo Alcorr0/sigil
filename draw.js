@@ -1,34 +1,44 @@
 function controlsUpdate(el) {
-	switch (el.id) {
-	case 'speed':
-		step = el.value/10;
-		if (isStop && step!=0) {
-			isStop = false;
-			window.requestAnimationFrame(draw);
-			requestAnimationFrame(animate);
+	if (el) {
+		switch (el.id) {
+		case 'speed':
+			step = el.value/10;
+			if (isStop && step!=0) {
+				isStop = false;
+				window.requestAnimationFrame(draw);
+				requestAnimationFrame(animate);
+			}
+			if (!isStop && step==0)
+				isStop = true;		
+			break;
+		case 'translateX':
+			translateX = Number(el.value);
+			break;
+		case 'translateY':
+			translateY = Number(el.value);
+			break;
+		case 'skewX':
+			skewX = Number(el.value);
+			break;
+		case 'skewY':
+			skewY = Number(el.value);
+			break;
+		case 'scale':
+			scale = Number(el.value);
+			break;
 		}
-		if (!isStop && step==0)
-			isStop = true;		
-		break;
-	case 'translateX':
-		translateX = Number(el.value);
-		break;
-	case 'translateY':
-		translateY = Number(el.value);
-		break;
-	case 'skewX':
-		skewX = Number(el.value);
-		break;
-	case 'skewY':
-		skewY = Number(el.value);
-		break;
-	case 'scale':
-		scale = Number(el.value);
-		break;
+		if (isStop)
+			window.requestAnimationFrame(draw);
+	} else {
+		controlsUpdate(document.getElementById("speed"));
+		controlsUpdate(document.getElementById("translateX"));
+		controlsUpdate(document.getElementById("translateY"));
+		controlsUpdate(document.getElementById("skewX"));
+		controlsUpdate(document.getElementById("skewY"));
+		controlsUpdate(document.getElementById("scale"));
 	}
-	if (isStop)
-		window.requestAnimationFrame(draw);
 }
+controlsUpdate();
 
 //MAIN DRAW FUNCTION//
 draw = function() {
