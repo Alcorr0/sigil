@@ -163,14 +163,15 @@ button:active {
 
 .remove {
 	position: absolute;
-	top: -4px;
+	top: -2px;
 	right: 0px;
 	width:  20px;
 	height: 20px;
-	border-radius: 50%;
-	background-color: #d00;
-	color: #fff;
+	border-radius: 25%;
+	background-color: #d008;
+	color: #888;
 	line-height: 0;
+	padding: 0 0 1px 1px;
 }
 .remove:active {
 	background-color: #a00;
@@ -178,6 +179,51 @@ button:active {
 .remove:after {
   display: inline-block;
   content: "\00d7";
+  font-size: 17px;
+  font-weight: 700;
+}
+.addBtn{
+	float: right;
+  margin-bottom: 10px;
+	width:  20px;
+	height: 20px;
+	border-radius: 25%;
+	color: #888;
+  padding: 0 0 2px 0;
+  line-height: 0px;
+	font-size: 17px;
+  font-weight: 700;
+  background-color: transparent;
+}
+.moveButton {
+	position: absolute;
+	top: -2px;
+	right: 23px;
+	width:  20px;
+	height: 20px;
+	border-radius: 25%;
+	background-color: transparent;
+}
+.moveButton:after {
+	border: solid #888;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;	
+  content: "";
+}
+.up:after {
+  transform: rotate(-135deg);
+}
+.down:after {
+	margin-bottom: 3px;
+  transform: rotate(45deg);
+}
+li > .node > .remove:hover {
+	background-color: #c22;
+}
+li > .node > .moveButton:hover,
+li > .add > .addBtn:hover {
+	background-color: #8888;
 }
 li > .node > .remove,
 li > .node > .moveButton,
@@ -211,28 +257,6 @@ li:hover > .add > .addBtn {
   } 
 } 
 
-.moveButton {
-	position: absolute;
-	top: -4px;
-	right: 23px;
-	width:  20px;
-	height: 20px;
-	border-radius: 50%;
-}
-.moveButton:after {
-	border: solid black;
-  border-width: 0 1px 1px 0;
-  display: inline-block;
-  padding: 3px;	
-  content: "";
-}
-.up:after {
-  transform: rotate(-135deg);
-}
-.down:after {
-	margin-bottom: 3px;
-  transform: rotate(45deg);
-}
 
 .propInput {
 	margin-top: 2px;
@@ -248,25 +272,11 @@ li:hover > .add > .addBtn {
 	height: 25px;
 }
 
-/*option {
-	transition: 0s background-color;
-}
-option:hover{
-    background-color:red;    
-    transition-delay:1s;
-}*/
 .add{
 	margin-bottom: 30px;
 }
 #constructor > .add > .addBtn{
 	display: block !important;
-}
-.addBtn{
-	float: right;
-  margin-bottom: 10px;
-	width:  20px;
-	height: 20px;
-	border-radius: 50%;
 }
 #addMenu.open{
 	padding: 10px 20px;
@@ -355,4 +365,11 @@ option:hover{
   #addMenu {
   	background-color: #444;
   }
+  .remove,
+	.moveButton,
+	.addBtn {
+		opacity: 1 !important;
+		visibility: visible !important;
+		display: block !important;
+	}
 }
