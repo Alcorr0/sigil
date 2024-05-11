@@ -43,10 +43,15 @@ function rotate(angle,func) {
 }
 function color(color,func) {
 	var c = ctx.strokeStyle;
+
+	const clear = color=="#000000ff";
+	if(clear) ctx.globalCompositeOperation = 'destination-out';
+
 	ctx.strokeStyle = color;
 	ctx.fillStyle   = color;
-
 	func();
+
+	if(clear) ctx.globalCompositeOperation = 'source-over';
 
 	ctx.strokeStyle = c;
 	ctx.fillStyle   = c;
@@ -138,11 +143,11 @@ function number(w,s) {
 }
 function line(x,y,dx=0,dy=0) {
 	move(x,y,function(){
+
 		ctx.beginPath();
 		ctx.moveTo(0,0);
 
 		ctx.lineTo(dx,dy);
-
 		ctx.stroke();
 		ctx.closePath();
 	});

@@ -135,7 +135,9 @@ function graphCenter() {
 			{"type":"Random Text","width":"40","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"secs*Id(92)","angle":"0"}
 		],
 		// пульс
-		[{"type":"To Circle","radius":"0","segments":rnb,"angle A":"0","angle B":"PI*2","is alternately":false,"children":[{"type":"Polygon","radius":"50*(nsin(time*"+Math.ceil(Math.random()*2)+"+2*PI/"+rnb+"*Id(93)))","segments":"4","max":"-1"}]}]
+		[{"type":"To Circle","radius":"0","segments":rnb,"angle A":"0","angle B":"PI*2","is alternately":false,"children":[{"type":"Polygon","radius":"50*(nsin(time*"+Math.ceil(Math.random()*2)+"+2*PI/"+rnb+"*Id(93)))","segments":"4","max":"-1"}]}],
+		// луна
+		[{"type":"Rotate","angle":Math.PI*2*Math.random(),"children":[{"type":"Width","width":"1","children":[{"type":"Move","x":"0","y":"-25","children":[{"type":"Circle","radius":"25","angle A":"0","angle B":"PI*2"},{"type":"Letters Circle","radius":"20","width":"5","text":"     ١ࢴ٤٧؇٦٩چ٢ۍ٨٥    ","segments":"1","angle":"PI"}]},{"type":"Move","x":"0","y":"-15","children":[{"type":"Circle","radius":"30","angle A":"0","angle B":"PI*2"},{"type":"Letters Circle","radius":"34","width":"5","text":"     ﴾١ࢴ٤٧؇٦٣؏٩چ٢ۍ٨ێ٥ࢳ﴿    ","segments":"1","angle":"0"}]},{"type":"Color RGB","red":"0","green":"0","blue":"0","alpha":"1","children":[{"type":"Width","width":"9","children":[{"type":"Circle","radius":"50-9/2","angle A":"4","angle B":"-0.8"}]}]},{"type":"Move","x":"0","y":"30","children":[{"type":"Polygon","radius":"10","segments":"3","max":"-1"}]}]},{"type":"Move","x":"-6","y":"40","children":[{"type":"Text","width":"5","text":"﴾۞ ﴿","angle":"0"}]}]},{"type":"Circle","radius":"50","angle A":"0","angle B":"PI*2"}]
 	];
 	return centers[Math.floor(Math.random()*(centers.length))];
 	// if (center.constructor === Array)
@@ -217,9 +219,6 @@ function generate() {
 		//nodes
 		const r = graph[g].r;
 
-		// nodes.concat(graphNodes());
-
-		nodes.push({"type":"Color RGB","red":"0","green":"0","blue":"0","alpha":"0.5","children":[{"type":"Filled Circle","radius":r,"angle A":"0","angle B":"PI*2"}]});
 		nodes = nodes.concat(graphCenter());
 		if(Math.random()>0.3) nodes.push(graphCircleBack(r));
 		var cr = 50;

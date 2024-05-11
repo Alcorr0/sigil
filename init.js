@@ -1,8 +1,8 @@
 //SETUP//
 //canvas setup
 const canvas = document.getElementById("canvas");
+const glow   = document.getElementById("glow");
 const ctx   = canvas.getContext("2d");
-var renderer;
 
 ctx.strokeStyle = "#ffffff";
 ctx.fillStyle = "#ffffff";
@@ -18,26 +18,15 @@ function fixRes() {
 	canvas.width  = res.x;
 	canvas.height = res.y;
 
-	if (renderer) {
-		renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
-		renderer.setSize(window.innerWidth, window.innerHeight);
-		uniforms.resolution.value.x = window.innerWidth;
-		uniforms.resolution.value.y = window.innerHeight;
-
-		tex.dispose();
-		tex = new THREE.CanvasTexture(canvas);
-		tex.needsUpdate = true;
-	}
-
 	if (isStop)
 		window.requestAnimationFrame(draw);
 
-	ctx.strokeStyle = "#ffffff";
-	ctx.fillStyle = "#ffffff";
-	ctx.lineWidth = 2;
 }
 window.addEventListener('resize', fixRes, true);
 fixRes();
+ctx.strokeStyle = "#ffffff";
+ctx.fillStyle = "#ffffff";
+ctx.lineWidth = 2;
 
 var secs = 0;
 var time = 0;
@@ -47,6 +36,8 @@ var translateY = 0;
 var skewX = 0;
 var skewY = 0;
 var scale = 1;
+var glowR = 0;
+var glowC = 0;
 
 var isStop = false;
 var draw;
@@ -54,6 +45,125 @@ var draw;
 //texts
 var greekU = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
 var greekD = "αβγδεζηθικλμνξοπρστυφχψω";
+
+//gpu
+const gpu = new GPU({
+	canvas: glow,
+	mode: 'gpu'
+	// mode: 'dev'
+});
+const getGlow = gpu.createKernel(
+	function(frame,radius,color,directions,quality) {
+		const TPI = Math.PI*2;
+		const k = quality * directions - 15;
+		const x = this.thread.x,
+			  y = this.thread.y,
+			  w = this.output.x,
+			  h = this.output.y;
+		var Color = frame[y][x];
+		for(var d=0; d<TPI; d+=TPI/directions)
+			for(var i=1/quality; i<=1; i+=1/quality)
+			{
+				var nx = x+cos(d)*radius*i; if(nx<0)nx=0; else if(nx>=w)nx=w-1
+				var ny = y+sin(d)*radius*i; if(ny<0)ny=0; else if(ny>=h)ny=h-1
+				const col = frame[ny][nx];
+				// *2-1
+				Color.r += col.r;
+				Color.g += col.g;
+				Color.b += col.b;
+				Color.a += col.a;
+			}
+		Color.r /= k;
+		Color.g /= k;
+		Color.b /= k;
+		Color.a /= k;
+
+		if(color>0) {
+			var max = Math.max(Color.r, Math.max(Color.g, Color.b)),
+				min = Math.min(Color.r, Math.min(Color.g, Color.b));
+  			var d = max - min;
+  			var H = 0,
+  				S = 1,//(max == 0) ? 0 : d / max,
+  				V = max;
+			if (max != min) {
+				var o = 0; if(Color.g<Color.b) o = 6;
+				if(max==Color.r) H = (Color.g - Color.b) / d + 6;
+				if(max==Color.g) H = (Color.b - Color.r) / d + 2;
+				if(max==Color.b) H = (Color.r - Color.g) / d + 4;
+				H /= 6;
+			}
+
+			H += color;
+
+			var i = Math.floor(H * 6);
+			var f = H * 6 - i;
+			var p = V * (1 - S);
+			var q = V * (1 - S * f);
+			var t = V * (1 - S * (1 - f));
+			i = i%6;
+			     if(i==0){Color.r = V; Color.g = t; Color.b = p;}
+			else if(i==1){Color.r = q; Color.g = V; Color.b = p;}
+			else if(i==2){Color.r = p; Color.g = V; Color.b = t;}
+			else if(i==3){Color.r = p; Color.g = q; Color.b = V;}
+			else if(i==4){Color.r = t; Color.g = p; Color.b = V;}
+			else         {Color.r = V; Color.g = p; Color.b = q;}
+			
+		}
+
+		this.color(
+			Color.r,
+			Color.g,
+			Color.b,
+			Color.a
+		);
+	}, {
+		output: [res.x,res.y],
+		graphical: true
+	}
+);
+function rgbToHsv(r, g, b) {
+  r /= 255, g /= 255, b /= 255;
+
+  var max = Math.max(r, g, b), min = Math.min(r, g, b);
+  var h, s, v = max;
+
+  var d = max - min;
+  s = max == 0 ? 0 : d / max;
+
+  if (max == min) {
+    h = 0; // achromatic
+  } else {
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+
+    h /= 6;
+  }
+
+  return [ h, s, v ];
+}
+function hsvToRgb(h, s, v) {
+  var r, g, b;
+
+  var i = Math.floor(h * 6);
+  var f = h * 6 - i;
+  var p = v * (1 - s);
+  var q = v * (1 - f * s);
+  var t = v * (1 - (1 - f) * s);
+
+  switch (i % 6) {
+    case 0: r = v, g = t, b = p; break;
+    case 1: r = q, g = v, b = p; break;
+    case 2: r = p, g = v, b = t; break;
+    case 3: r = p, g = q, b = v; break;
+    case 4: r = t, g = p, b = v; break;
+    case 5: r = v, g = p, b = q; break;
+  }
+
+  return [ r * 255, g * 255, b * 255 ];
+}
 
 //random
 function getRand(a) {
@@ -91,6 +201,8 @@ function parse(str) {
 	str = str.replaceAll("sin(","Math.sin(");
 	str = str.replaceAll("cos(","Math.cos(");
 	str = str.replaceAll("floor(","Math.floor(");
+	str = str.replaceAll("round(","Math.round(");
+	str = str.replaceAll("ceil(","Math.ceil(");
 	str = str.replaceAll("time",time);
 	str = str.replaceAll("secs",secs);
 	str = str.replaceAll("Id(","getId(");
