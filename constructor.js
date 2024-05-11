@@ -90,20 +90,24 @@ function add(e, data) {
 	new_node.getElementsByClassName("nodeNum")[0].innerHTML = id;
 
 	//properties
-	for (var i=0; i<data.properties.length; i++) {
-		const prop = data.properties[i];
-		const def  = data.defaults[i];
+	if(data.properties.length==0)
+		new_node.getElementsByClassName("moveButton")[0].remove();
+	else {
+		for (var i=0; i<data.properties.length; i++) {
+			const prop = data.properties[i];
+			const def  = data.defaults[i];
 
-		var new_property = sample_property.cloneNode(true);
-		new_property.children[0].innerHTML = prop;
-		new_property.children[1].name    = prop;
-		if (typeof def === "boolean") {//костыль для bool
-			new_property.children[1].type    = "checkbox";
-			new_property.children[1].checked = def;
-		} else
-			new_property.children[1].value = def;
+			var new_property = sample_property.cloneNode(true);
+			new_property.children[0].innerHTML = prop;
+			new_property.children[1].name    = prop;
+			if (typeof def === "boolean") {//костыль для bool
+				new_property.children[1].type    = "checkbox";
+				new_property.children[1].checked = def;
+			} else
+				new_property.children[1].value = def;
 
-		new_node.getElementsByClassName("propList")[0].appendChild(new_property);
+			new_node.getElementsByClassName("propList")[0].appendChild(new_property);
+		}
 	}
 	
 	var li = document.createElement("li");

@@ -1,9 +1,8 @@
 function elementParse(element) {
 	switch (element["type"]) {
-	case "If":
+	case "Transparent":
 		if(element["children"]) {
-			condition(
-				element["expression"],
+			transparent(
 				function(){arrParse(element["children"])}
 			);
 		}
@@ -121,28 +120,16 @@ function elementParse(element) {
 		circle(
 			parse(element["radius"]),
 			element["angle A"]?parse(element["angle A"]):0,
-			element["angle B"]?parse(element["angle B"]):Math.PI*2
-		);
-	break;
-	case "Filled Circle":
-		filledCircle(
-			parse(element["radius"]),
-			element["angle A"]?parse(element["angle A"]):0,
-			element["angle B"]?parse(element["angle B"]):Math.PI*2
+			element["angle B"]?parse(element["angle B"]):Math.PI*2,
+			element["fill"]
 		);
 	break;
 	case "Ellipse":
 		ellipse(
 			parse(element["radius A"]),
 			parse(element["radius B"]),
-			parse(element["angle"])
-		);
-	break;
-	case "Filled Ellipse":
-		filledEllipse(
-			parse(element["radius A"]),
-			parse(element["radius B"]),
-			parse(element["angle"])
+			parse(element["angle"]),
+			element["fill"]
 		);
 	break;
 	

@@ -1,6 +1,7 @@
 body {
 	margin: 0px;
 	color: #fff;
+	background-color: #000;
 }
 canvas {
 	top: 0px;
@@ -107,6 +108,7 @@ ul {
 	margin: 5px;
 	padding: 5px;
 	width: fit-content;
+	min-width: 200px;
 	block-size: fit-content;
 	color: #fff;
 }

@@ -41,17 +41,22 @@ function rotate(angle,func) {
 
 	ctx.restore();
 }
+function transparent(func) {
+	const c = ctx.fillStyle
+	ctx.fillStyle = "#000000ff";
+	ctx.globalCompositeOperation = 'destination-out';
+
+	func();
+
+	ctx.globalCompositeOperation = 'source-over';
+	ctx.fillStyle = c;
+}
 function color(color,func) {
 	var c = ctx.strokeStyle;
-
-	const clear = color=="#000000ff";
-	if(clear) ctx.globalCompositeOperation = 'destination-out';
 
 	ctx.strokeStyle = color;
 	ctx.fillStyle   = color;
 	func();
-
-	if(clear) ctx.globalCompositeOperation = 'source-over';
 
 	ctx.strokeStyle = c;
 	ctx.fillStyle   = c;
@@ -154,28 +159,19 @@ function line(x,y,dx=0,dy=0) {
 }
 
 //circles
-function circle(r,aa=0,ab=Math.PI*2) {
+function circle(r, aa=0,ab=Math.PI*2, fill) {
 	ctx.beginPath();
 	ctx.arc(0,0, r, aa,ab);
 	ctx.stroke();
 	ctx.closePath();
+	if(fill) ctx.fill();
 }
-function filledCircle(r,aa=0,ab=Math.PI*2) {
-	ctx.beginPath();
-	ctx.arc(0,0, r, aa,ab);
-	ctx.fill();
-}
-function ellipse(ra,rb,a) {
-	// console.log(ra,rb,a);
+function ellipse(ra,rb,a, fill) {
 	ctx.beginPath();
 	ctx.ellipse(0,0, ra,rb, a+Math.PI/2, 0,Math.PI*2);
 	ctx.stroke();
 	ctx.closePath();
-}
-function filledEllipse(ra,rb,a) {
-	ctx.beginPath();
-	ctx.ellipse(0,0, ra,rb, a, 0,Math.PI*2);
-	ctx.fill();
+	if(fill) ctx.fill();
 }
 function lettersCircle(r,w,s,d=1,a) {
 	var c = s.length*d;
