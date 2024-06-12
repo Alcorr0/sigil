@@ -47,11 +47,19 @@ var greekU = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
 var greekD = "αβγδεζηθικλμνξοπρστυφχψω";
 
 //gpu
-const gpu = new GPU({
+function initGPU(args) {
+	try {
+		return new window.GPU.GPU(args);
+	} catch (e) {
+		return new GPU(args);
+	}
+}
+const gpu = initGPU({
 	canvas: glow,
 	mode: 'gpu'
 	// mode: 'dev'
 });
+
 const getGlow = gpu.createKernel(
 	function(frame,radius,color,directions,quality) {
 		const TPI = Math.PI*2;
