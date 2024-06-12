@@ -33,6 +33,7 @@ canvas {
 	height: fit-content;
 	max-height: 90vh;
 	overflow-y: auto;
+	overflow-x: hidden;
 }
 #buttons > * {
 	display: block;
