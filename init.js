@@ -18,15 +18,16 @@ function fixRes() {
 	canvas.width  = res.x;
 	canvas.height = res.y;
 
+	ctx.strokeStyle = "#ffffff";
+	ctx.fillStyle = "#ffffff";
+	ctx.lineWidth = 2;
+
 	if (isStop)
 		window.requestAnimationFrame(draw);
 
 }
 window.addEventListener('resize', fixRes, true);
 fixRes();
-ctx.strokeStyle = "#ffffff";
-ctx.fillStyle = "#ffffff";
-ctx.lineWidth = 2;
 
 var secs = 0;
 var time = 0;
@@ -59,7 +60,6 @@ const gpu = initGPU({
 	mode: 'gpu'
 	// mode: 'dev'
 });
-
 const getGlow = gpu.createKernel(
 	function(frame,radius,color,directions,quality) {
 		const TPI = Math.PI*2;
@@ -69,6 +69,7 @@ const getGlow = gpu.createKernel(
 			  w = this.output.x,
 			  h = this.output.y;
 		var Color = frame[y][x];
+		const prev = Color;
 		for(var d=0; d<TPI; d+=TPI/directions)
 			for(var i=1/quality; i<=1; i+=1/quality)
 			{
@@ -119,16 +120,18 @@ const getGlow = gpu.createKernel(
 		}
 
 		this.color(
-			Color.r,
-			Color.g,
-			Color.b,
-			Color.a
+			/*prev.r+*/Color.r,
+			/*prev.g+*/Color.g,
+			/*prev.b+*/Color.b,
+			/*prev.a+*/Color.a
 		);
 	}, {
 		output: [res.x,res.y],
 		graphical: true
 	}
 );
+
+//
 function rgbToHsv(r, g, b) {
   r /= 255, g /= 255, b /= 255;
 
@@ -184,18 +187,11 @@ function getRand(a) {
 }
 
 var j_id=[];
-function getId(n) {
-	if (n === undefined) {
-		j_id = [];
-		return;
-	}
-
-	if (j_id[n] === undefined) 
-		j_id[n] = 0;
-	else
-		j_id[n]++;
-
-	return j_id[n];
+var j_depth=0;
+function getId() {
+	if (j_id[j_depth] === undefined) 
+		j_id[j_depth] = 0;
+	return j_id[j_depth]++;
 }
 
 //①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳
@@ -203,7 +199,7 @@ function getId(n) {
 
 
 function parse(str) {
-	str = str.replaceAll("PI",Math.PI);
+	str = str.replaceAll("Pi",Math.PI);
 	str = str.replaceAll("nsin(","0.5+0.5*sin(");
 	str = str.replaceAll("ncos(","0.5+0.5*cos(");
 	str = str.replaceAll("sin(","Math.sin(");
@@ -211,8 +207,8 @@ function parse(str) {
 	str = str.replaceAll("floor(","Math.floor(");
 	str = str.replaceAll("round(","Math.round(");
 	str = str.replaceAll("ceil(","Math.ceil(");
-	str = str.replaceAll("time",time);
-	str = str.replaceAll("secs",secs);
-	str = str.replaceAll("Id(","getId(");
+	str = str.replaceAll("Time",time);
+	str = str.replaceAll("Secs",secs);
+	str = str.replaceAll("I","getId()");
 	return eval(str);
 }

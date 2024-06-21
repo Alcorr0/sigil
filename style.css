@@ -114,7 +114,7 @@ ul {
 	color: #fff;
 }
 li {
-	padding-bottom: 2px;
+/*	padding-bottom: 2px;*/
 	transition: transform ease-in 0.3s;
 }
 .nodeName{

@@ -19,12 +19,14 @@ draw = function() {
 //time
 	secs += step/Math.PI*2;
 	time += step;
-
+//ids
+	j_id=[];
+	j_depth=0;
 
 //json setup
 	getId();
 	
-	if (json.includes("time") || json.includes("secs")){} else
+	if (json.includes("Time") || json.includes("Secs")){} else
 		isStop = true;
 
 	var data = JSON.parse(json);
@@ -74,6 +76,7 @@ function controlsUpdate(el) {
 		case 'glowD':		glowD = v; 		break;
 		case 'glowQ':		glowQ = v; 		break;
 		}
+		// console.log(v);
 
 		if (isStop)
 			window.requestAnimationFrame(draw);

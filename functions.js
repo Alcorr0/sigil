@@ -26,6 +26,7 @@ function condition(expr,func) {
 }
 //space transform
 function move(x,y,func) {
+	j_depth++;
 	ctx.save();
 	ctx.translate(x,y);
 
@@ -34,6 +35,7 @@ function move(x,y,func) {
 	ctx.restore();
 }
 function rotate(angle,func) {
+	j_depth++;
 	ctx.save();
 	ctx.rotate(angle);
 
@@ -42,6 +44,7 @@ function rotate(angle,func) {
 	ctx.restore();
 }
 function transparent(func) {
+	j_depth++;
 	const c = ctx.fillStyle
 	ctx.fillStyle = "#000000ff";
 	ctx.globalCompositeOperation = 'destination-out';
@@ -52,16 +55,18 @@ function transparent(func) {
 	ctx.fillStyle = c;
 }
 function color(color,func) {
+	j_depth++;
 	var c = ctx.strokeStyle;
-
 	ctx.strokeStyle = color;
 	ctx.fillStyle   = color;
+
 	func();
 
 	ctx.strokeStyle = c;
 	ctx.fillStyle   = c;
 }
 function width(width,func) {
+	j_depth++;
 	var w = ctx.lineWidth;
 	ctx.lineWidth = width;
 
@@ -70,6 +75,7 @@ function width(width,func) {
 	ctx.lineWidth = w;
 }
 function toCircle(r,c,aa=0,ab=Math.PI*2,func) {
+	j_depth++;
 	ab += aa;
 	
 	if (aa>ab) {
@@ -90,13 +96,16 @@ function toCircle(r,c,aa=0,ab=Math.PI*2,func) {
 	}
 }
 function toLine(l,c,o,a,func) {
+	j_depth++;
 	var stepL=l/c;
 	var stepA=a/c;
 	for(var i=o; i<c; i++) {
 		ctx.save();
 		ctx.rotate(stepA*i);
 		ctx.translate(0,-stepL*i);
+		
 		func();
+
 		ctx.restore();
 	}
 }
@@ -216,12 +225,12 @@ function randLettersCircle(r,w,c,s,t,a) {
 		ctx.restore();
 	}
 }
-function polygon(r,c,max) {
+function polygon(r,c,fill) {
 	var step = Math.PI*2/c;
 
 	ctx.moveTo(0,-r);
 	ctx.beginPath();
-	for (var a=0,i=0; a<=Math.PI*2+step,i++<=max; a+=step) {
+	for (var a=0,i=0; a<=Math.PI*2+step,i++<=c; a+=step) {
 		ctx.save();
 		ctx.rotate(a);
 
@@ -231,6 +240,7 @@ function polygon(r,c,max) {
 	}
 	ctx.stroke();
 	ctx.closePath();
+	if(fill) ctx.fill();
 }
 function radialCircle(ra,rb,c,aa=0,ab=Math.PI*2) {
 	ab += aa;

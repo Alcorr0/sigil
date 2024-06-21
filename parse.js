@@ -156,7 +156,8 @@ function elementParse(element) {
 		polygon(
 			parse(element["radius"]),
 			parse(element["segments"]),
-			(element["max"]&&element["max"]!=-1)?element["max"]:parse(element["segments"])
+			element["fill"]
+			//(element["max"]&&element["max"]!=-1)?element["max"]:parse(element["segments"])
 		);
 	break;
 	case "Radial Circle":
