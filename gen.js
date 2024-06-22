@@ -65,15 +65,15 @@ function graphLines(a, b) {
 
 	const lines = [
 		//lines
-		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"Line","x":"10","y":"10*sin(Time+I)","dx":len-20,"dy":"0"},{"type":"Line","x":"10","y":"-10*sin(Time+I)","dx":len-20,"dy":"0"}],
+		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"Line","x":"10","y":"10*sin(Time+I/2)","dx":len-20,"dy":"0"},{"type":"Line","x":"10","y":"-10*sin(Time+(I-1)/2)","dx":len-20,"dy":"0"}],
 		//ladder
 		[{"type":"Line","x":"0","y":"10","dx":len,"dy":"0"},{"type":"Line","x":"0","y":"-10","dx":len,"dy":"0"},{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":s*20,"segments":s,"offset":"1","angle":"0","is alternately":false,"children":[{"type":"Line","x":"-10","y":-(len-s*20)/2,"dx":"20","dy":"0"}]}]},{"type":"Move","x":10+(len-s*20)/2,"y":"0","children":[{"type":"Random Text","width":"20","text":"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":s,"seed":"Secs+I","angle":"Pi/2"}]}],
 		//chain
 		[{"type":"Rotate","angle":"Pi/2","children":[{"type":"Move","x":"0","y":"-10","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","is alternately":false,"children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":"4*(nsin(Time+I))","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}],
 		//dna
-		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","is alternately":false,"children":[{"type":"Move","x":"10*sin(Time+I/2)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Move","x":"-10*sin(Time+I/2)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}],
+		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","is alternately":false,"children":[{"type":"Move","x":"10*sin(Time+I/4)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Move","x":"-10*sin(Time+(I-1)/4)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}],
 		//dna lines
-		[{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s*2,"offset":"0","angle":"0","is alternately":false,"children":[{"type":"Line","x":"-10*sin(Time+I/2)","y":"0","dx":"20*sin(Time+I/2)","dy":"0"}]}]}]
+		[{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s*2,"offset":"0","angle":"0","is alternately":false,"children":[{"type":"Line","x":"-10*sin(Time+I/4)","y":"0","dx":"20*sin(Time+(I-1)/4)","dy":"0"}]}]}]
 	];
 	var line = lines[Math.floor(Math.random()*lines.length)];
 	
@@ -151,25 +151,28 @@ function graphCircle(ra, rb) {
 	var circle = [];
 
 	const circles = [
-		[//all
-			//инверсия лучей
+		[// all
+			// инверсия лучей
 			{"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[{"type":"Width","width":d*0.8,"children":[{"type":"Circle","radius":c,"angle A":"0","angle B":"Pi*2","fill":false}]},{"type":"Transparent","children":[{"type":"Radial Circle","radius A":ra,"radius B":rb,"segments":Math.floor(2+Math.random()*8),"angle A":"0","angle B":"Pi*2"}]}]},
-			//лучи
+			// лучи
 			{"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[{"type":"Radial Circle","radius A":ra,"radius B":rb,"segments":"64","angle A":"0","angle B":"Pi*2"},{"type":"Transparent","children":[{"type":"Radial Circle","radius A":ra,"radius B":rb,"segments":64+Math.round(-5	+Math.random()*10),"angle A":"Time/8","angle B":"Time/8+Pi*2"}]}]},
-			//два круга
+			// два круга
 			{"type":"Width","width":d/4,"children":[{"type":"Circle","radius":ra+d/4,"angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":ra+3*d/4,"angle A":"0","angle B":"Pi*2","fill":false}]},
-			//текст
+			// текст
 			{"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[{"type":"Random Letters Circle","radius":c,"width":d,"segments":Math.floor(2*Math.PI*c/d),"text":"αβγδεζηθικλμνξοπρστυφχψω ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(Secs*2-0.5)","angle":"0"}]},
-			//кубики
+			// кубики
 			{"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[{"type":"Random Letters Circle","radius":c,"width":d,"segments":Math.floor(2*Math.PI*c/d),"text":"▖▗▘▙▚▛▜▝▞▟■","seed":"I","angle":"0"}]}
 		],
-		[//only thick
-			//лучи с буквами
+		[// only thick
+			// фазы луны
+			{"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[{"type":"To Circle","radius":c,"segments":rnb*2,"angle A":"0","angle B":"Pi*2","is alternately":false,"children":[{"type":"Circle","radius":"7","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"To Circle","radius":c,"segments":rnb*2-1,"angle A":"Time/32","angle B":"Pi*2","is alternately":false,"children":[{"type":"Move","x":"0","y":"0","children":[{"type":"Transparent","children":[{"type":"Circle","radius":"6","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}]},
+			// лучи с буквами
 			{"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[{"type":"Radial Circle","radius A":ra,"radius B":rb,"segments":"16","angle A":"0","angle B":"Pi*2"},{"type":"Rotate","angle":"Pi/16","children":[{"type":"Random Letters Circle","radius":c,"width":d/2,"segments":"16","text":"αβγδεζηθικλμνξοπρστυφχψω ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(Secs*2-0.5)","angle":"0"}]}]},
 			// цветки
 			{"type":"Width","width":"1","children":[{"type":"To Circle","radius":c,"segments":Math.floor(Math.random()*2*Math.PI*c/d),"angle A":"-Time*"+rna+"/2","angle B":"Pi*2","is alternately":false,"children":[{"type":"Circle","radius":d/2,"angle A":"-Pi/2","angle B":"Pi/2","fill":false}]},{"type":"To Circle","radius":c,"segments":Math.floor(Math.random()*2*Math.PI*c/d),"angle A":"Time*"+rna+"/2","angle B":"Pi*2","is alternately":false,"children":[{"type":"Circle","radius":d/2,"angle A":"Pi/2","angle B":"3*Pi/2","fill":false}]},{"type":"Circle","radius":rb,"angle A":"0","angle B":"Pi*2","fill":false}]},
 			// кольцо с рандомным количеством тонких кругов
-			circlesPattern(ra,rb,d,c)
+			circlesPattern(ra,rb,d,c),
+
 		]
 	];
 	

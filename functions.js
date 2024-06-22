@@ -33,6 +33,8 @@ function move(x,y,func) {
 	func();
 
 	ctx.restore();
+	getId(0);
+	j_depth--;
 }
 function rotate(angle,func) {
 	j_depth++;
@@ -42,6 +44,8 @@ function rotate(angle,func) {
 	func();
 
 	ctx.restore();
+	getId(0);
+	j_depth--;
 }
 function transparent(func) {
 	j_depth++;
@@ -53,6 +57,8 @@ function transparent(func) {
 
 	ctx.globalCompositeOperation = 'source-over';
 	ctx.fillStyle = c;
+	getId(0);
+	j_depth--;
 }
 function color(color,func) {
 	j_depth++;
@@ -64,6 +70,8 @@ function color(color,func) {
 
 	ctx.strokeStyle = c;
 	ctx.fillStyle   = c;
+	getId(0);
+	j_depth--;
 }
 function width(width,func) {
 	j_depth++;
@@ -73,6 +81,8 @@ function width(width,func) {
 	func();
 
 	ctx.lineWidth = w;
+	getId(0);
+	j_depth--;
 }
 function toCircle(r,c,aa=0,ab=Math.PI*2,func) {
 	j_depth++;
@@ -94,6 +104,8 @@ function toCircle(r,c,aa=0,ab=Math.PI*2,func) {
 
 		ctx.restore();
 	}
+	getId(0);
+	j_depth--;
 }
 function toLine(l,c,o,a,func) {
 	j_depth++;
@@ -108,6 +120,8 @@ function toLine(l,c,o,a,func) {
 
 		ctx.restore();
 	}
+	getId(0);
+	j_depth--;
 }
 
 //single forms 

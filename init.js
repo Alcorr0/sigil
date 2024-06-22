@@ -188,9 +188,14 @@ function getRand(a) {
 
 var j_id=[];
 var j_depth=0;
-function getId() {
-	if (j_id[j_depth] === undefined) 
+function getId(val) {
+	if(val !== undefined) {
+		j_id[j_depth] = val;
+		return val;
+	}
+	if (j_id[j_depth] === undefined)
 		j_id[j_depth] = 0;
+	// console.log(j_depth,j_id[j_depth]);
 	return j_id[j_depth]++;
 }
 
