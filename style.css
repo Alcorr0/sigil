@@ -148,9 +148,28 @@ input[type="text"], button, select {
 	border-radius: 5px;
 	border: solid 2px #888;
 	background-color: #eee;
+	width: 90%;
+  float: right;
+  padding: 0 5px;
+  border: 0;
 }
 input[type="text"]:hover, button:hover {
 	background-color: #ccc;
+}
+input[type="checkbox"] {
+	appearance: none;
+  display: block;
+  width: 25px;
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 0;
+  margin-left: calc(10% - 10px);
+}
+#shareInout {
+	padding-block: 2px;
+}
+.open input[type="checkbox"]:checked {
+	appearance: auto;
 }
 button:active {
 	background-color: #aaa;
@@ -163,6 +182,10 @@ button:active {
 .node {
 	position:relative;
 }
+.node .propList {
+	width: 100%;
+	padding: 0 5px;
+}
 
 .remove {
 	position: absolute;
@@ -174,7 +197,7 @@ button:active {
 	background-color: #d008;
 	color: #888;
 	line-height: 0;
-	padding: 0 0 1px 1px;
+	padding: 0 0 2px 0;
 }
 .remove:active {
 	background-color: #a00;
@@ -224,6 +247,10 @@ button:active {
 li > .node > .remove:hover {
 	background-color: #c22;
 }
+li > .node > .moveButton,
+li > .add > .addBtn {
+	background-color: #8884;
+}
 li > .node > .moveButton:hover,
 li > .add > .addBtn:hover {
 	background-color: #8888;
@@ -266,14 +293,22 @@ li:hover > .add > .addBtn {
 	float: right;
 	max-width: 60%;
 }
-.property {
-	overflow: hidden;
-	height: 0;
-	transition: all 1s;
+tr.property > td {
+	padding: 0;
+}
+tr.property > td > label {
+	display: block;
 	white-space: nowrap;
 }
-.open > .property {
+tr.property > td > * {
+	overflow: hidden;
+	transition: all 1s;
+	height: 0;
+}
+.open > tr.property > td > * {
 	height: 25px;
+	margin-top:    2px;
+	margin-bottom: 2px;
 }
 
 .add{

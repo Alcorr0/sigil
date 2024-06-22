@@ -188,14 +188,12 @@
 				<label class="nodeName">node name</label><label class="nodeNum">0</label>
 				<button class="moveButton down" onclick="closeNode(this)"></button>
 				<button class="remove" onclick="clr(this.parentElement.parentElement)"></button>
-				<ul class="propList">
-
-					<li class="property">
-						<label class="propName">property name</label>
-						<input class="propinput" type="text" name="property name" onchange="compile()">
-					</li>
-
-				</ul>
+				<table class="propList">
+						<tr class="property">
+							<td><label class="propName">property name</label></td>
+							<td><input class="propinput" type="text" name="property name" onchange="compile()"></td>
+						</tr>
+				</table>
 			</div>
 			<div class="add" type="Move">
 				<ul class="childrenList root">
@@ -229,7 +227,7 @@
 			<button onclick="addN('Radial Circle')"			>Radial circle</button>
 		</div>
 		<div id="buttons">
-			<label  id="timeLabel">Period</label>
+			<!-- <label  id="timeLabel">Period</label> -->
 			<input  id="time" type="text" value="Pi*2">
 			<button id="record" onclick="startRecord()">record</button>
 			<hr>
@@ -246,7 +244,7 @@
 			<label class="sub">Y</label>			<input id="translateY"	type="range" name="translateY"	oninput="controlsUpdate(this)" min="-1" max="1"   step="0.05" value="0">
 			<label class="sub">Skew x</label>		<input id="skewX"		type="range" name="skewX"		oninput="controlsUpdate(this)" min="-1" max="1"   step="0.1"  value="0">
 			<label class="sub">Skew y</label>		<input id="skewY"		type="range" name="skewY"		oninput="controlsUpdate(this)" min="-1" max="1"   step="0.1"  value="0">
-			<label class="sub">Scale</label>		<input id="scale"		type="range" name="scale"		oninput="controlsUpdate(this)" min="0"  max="5"   step="0.1"  value="1.5">
+			<label class="sub">Scale</label>		<input id="scale"		type="range" name="scale"		oninput="controlsUpdate(this)" min="0"  max="5"   step="0.1"  value="1">
 			<hr><label class="sub">Glow</label>
 			<label class="sub">radius</label>		<input id="glowR"		type="range" name="glowR"		oninput="controlsUpdate(this)" min="0"  max="50"  step="1"    value="9">
 			<label class="sub">color</label>		<input id="glowC"		type="range" name="glowC"		oninput="controlsUpdate(this)" min="0"  max="1"   step="0.05" value="0.66">

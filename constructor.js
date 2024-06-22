@@ -30,9 +30,10 @@ function compileNode(node) {
 	data.type = type;
 	var prop_list = node.getElementsByClassName("propList")[0].children;
 	for (const property of prop_list) {
-		var p_name  = property.children[0].innerHTML;
-		var p_value = property.children[1].value;
-		if (p_value == "on") p_value = property.children[1].checked;
+		if(property.tagName == "TBODY") continue;
+		var p_name  = property.children[0].children[0].innerHTML;
+		var p_value = property.children[1].children[0].value;
+		if (p_value == "on") p_value = property.children[1].children[0].checked;
 
 		data[p_name] = p_value;
 	}
@@ -87,7 +88,7 @@ function add(e, data) {
 	//node
 	var new_node = sample_node.cloneNode(true);
 	new_node.getElementsByClassName("nodeName")[0].innerHTML = type;
-	new_node.getElementsByClassName("nodeNum")[0].innerHTML = id;
+	new_node.getElementsByClassName("nodeNum" )[0].innerHTML = id;
 
 	//properties
 	if(data.properties.length==0)
@@ -98,13 +99,13 @@ function add(e, data) {
 			const def  = data.defaults[i];
 
 			var new_property = sample_property.cloneNode(true);
-			new_property.children[0].innerHTML = prop;
-			new_property.children[1].name    = prop;
+			new_property.children[0].children[0].innerHTML = prop;
+			new_property.children[1].children[0].name      = prop;
 			if (typeof def === "boolean") {//костыль для bool
-				new_property.children[1].type    = "checkbox";
-				new_property.children[1].checked = def;
+				new_property.children[1].children[0].type    = "checkbox";
+				new_property.children[1].children[0].checked = def;
 			} else
-				new_property.children[1].value = def;
+				new_property.children[1].children[0].value = def;
 
 			new_node.getElementsByClassName("propList")[0].appendChild(new_property);
 		}
@@ -296,7 +297,7 @@ function imp() {
 		field_share.style.border = "solid 2px #f00";
 		return;
 	}
-	field_share.style.border = "solid 2px #888";
+	field_share.style.border = "none";
 
 	json = field_share.value;
 
@@ -317,7 +318,7 @@ function compile() {
 	json = JSON.stringify(data);
 
 	if (isStop) {
-		if (json.includes("time") || json.includes("secs"))
+		if (json.includes("Time") || json.includes("Secs"))
 			isStop = false;
 
 		window.requestAnimationFrame(draw);
@@ -336,17 +337,19 @@ function showAdd(e) {
 		list.classList.add("open");
 }
 function closeNode(e) {
-	const direction = e.classList.contains("up");
+	const direction = e.parentElement.getElementsByClassName('propList')[0].classList.contains("open");
 	if(direction) {
 		e.classList.remove("up");
 		e.classList.add("down");
 
-		e.parentElement.getElementsByClassName('propList')[0].classList.remove("open");
+		var list = e.parentElement.parentElement.getElementsByClassName('propList');
+		for(const l of list) l.classList.remove("open");
 	} else {
 		e.classList.remove("down");
 		e.classList.add("up");
 
-		e.parentElement.getElementsByClassName('propList')[0].classList.add("open");
+		var list = e.parentElement.parentElement.getElementsByClassName('propList');
+		for(const l of list) l.classList.add("open");
 	}
 
 	// var node = e.parentNode.parentNode.parentNode;
