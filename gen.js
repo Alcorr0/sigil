@@ -132,7 +132,7 @@ function graphCenter() {
 		// буква
 		[
 			{"type":"Circle","radius":50,"angle A":"0","angle B":"Pi*2","fill":false},
-			{"type":"Random Text","width":"40","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"Secs*I","angle":"0"}
+			{"type":"Random Text","width":"40","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"Secs+"+Math.floor(Math.random()*10),"angle":"0"}
 		],
 		// пульс
 		[{"type":"To Circle","radius":"0","segments":rnb,"angle A":"0","angle B":"Pi*2","is alternately":false,"children":[{"type":"Polygon","radius":"50*(nsin(Time*"+Math.ceil(Math.random()*2)+"+2*Pi/"+rnb+"*I))","segments":"4","max":"-1"}]}],
@@ -215,11 +215,6 @@ function generate() {
 	for (var g=0; g<graph.length; g++) {
 		var nodes = [];
 
-		//lines
-		const go = graph[g].go;
-		for (var j=0; j<go.length; j++) {
-			nodes.push( graphLines(graph[g], graph[go[j]]) );
-		}
 
 		//nodes
 		const r = graph[g].r;
@@ -239,6 +234,11 @@ function generate() {
 			}
 
 			nodes = nodes.concat(graphCircle(prev_r, cr));
+		}
+		//lines
+		const go = graph[g].go;
+		for (var j=0; j<go.length; j++) {
+			nodes.push( graphLines(graph[g], graph[go[j]]) );
 		}
 		if(Math.random()>0.3) nodes.push(graphCircleBack(r));
 
