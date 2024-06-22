@@ -224,7 +224,6 @@ function generate() {
 		//nodes
 		const r = graph[g].r;
 
-		if(Math.random()>0.3) nodes.push(graphCircleBack(r));
 		nodes = nodes.concat(graphCenter());
 		var cr = 50;
 		while (cr<r) {
@@ -241,6 +240,7 @@ function generate() {
 
 			nodes = nodes.concat(graphCircle(prev_r, cr));
 		}
+		if(Math.random()>0.3) nodes.push(graphCircleBack(r));
 
 		data.push({
 			"type": "Move",

@@ -183,10 +183,10 @@ function add(e, data) {
 		}
 		//find nearest node
 		var n = currentElement;
-		while ( n
-			 && n.parentElement
-			 && !n.parentElement.classList.contains("childrenList")
-			 && (n=n.parentElement)
+		while( n
+			&& n.parentElement
+			&& !n.parentElement.classList.contains("childrenList")
+			&& (n=n.parentElement)
 		 );
 		// n.style.border = "solid 2px #f00";
 
