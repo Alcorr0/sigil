@@ -85,6 +85,25 @@ function elementParse(element) {
 			);
 		}
 	break;
+	case "To Ellipse":
+		if(element["children"]) {
+			toEllipse(
+				parse(element["radius A"]),
+				parse(element["radius B"]),
+				parse(element["segments"]),
+				element["angle A"]?parse(element["angle A"]):0,
+				element["angle B"]?parse(element["angle B"]):Math.PI*2,
+				function(){arrParse(element["children"], element["is alternately"])}
+			);
+		}
+	break;
+
+	case "Variable":
+		variable(
+			element["name"],
+			parse(element["value"])
+		);
+	break;
 
 	case "Text":
 		text(
@@ -128,7 +147,8 @@ function elementParse(element) {
 		ellipse(
 			parse(element["radius A"]),
 			parse(element["radius B"]),
-			parse(element["angle"]),
+			element["angle A"]?parse(element["angle A"]):0,
+			element["angle B"]?parse(element["angle B"]):Math.PI*2,
 			element["fill"]
 		);
 	break;
@@ -136,6 +156,16 @@ function elementParse(element) {
 	case "Letters Circle":
 		lettersCircle(
 			parse(element["radius"]),
+			parse(element["width"]),
+			element["text"],
+			element["segments"]?parse(element["segments"]):1,
+			parse(element["angle"])
+		);
+	break;
+	case "Letters Ellipse":
+		lettersEllipse(
+			parse(element["radius A"]),
+			parse(element["radius B"]),
 			parse(element["width"]),
 			element["text"],
 			element["segments"]?parse(element["segments"]):1,
@@ -167,6 +197,15 @@ function elementParse(element) {
 			parse(element["segments"]),
 			element["angle A"]?parse(element["angle A"]):0,
 			element["angle B"]?parse(element["angle B"]):Math.PI*2
+		);
+	break;
+	case "Image":
+		image(
+			parse(element["x"]),
+			parse(element["y"]),
+			parse(element["width"]),
+			parse(element["height"]),
+			element["image"]
 		);
 	break;
 	}

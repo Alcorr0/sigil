@@ -6,18 +6,42 @@ var videoStream = document.getElementById("canvas").captureStream(30);
 var mediaRecorder = new MediaRecorder(videoStream);
 var chunks = [];
 
-mediaRecorder.ondataavailable = function(e) {
-	chunks.push(e.data);
-};
-mediaRecorder.onstop = function(e) {
-	var blob = new Blob(chunks, { 'type' : 'video/webm' });
-	chunks = [];
+function startRecord() {
+	var t = document.getElementById("time").value;
+	t = t.replaceAll("Pi","Math.PI");
+	videoLength = eval(t);
+	videoTime = time;
+	isRecord = true;
 
-	//save
-	var filename = "video.webm";
-	if (window.navigator.msSaveOrOpenBlob) // IE10+
-		window.navigator.msSaveOrOpenBlob(blob, filename);
-	else { // Others
+	chunks = [];
+}
+function runRecord() {
+	const percent = Math.floor(100*(time-videoTime)/videoLength);
+	
+	getGlow(canvas,glowR,glowC,glowD,glowQ,glowB);
+	const pixels = getGlow.getPixels(false);
+	chunks.push(pixels);
+
+	document.getElementById("record").style.backgroundSize = percent+"%,100%";
+}
+function stopRecord() {
+	isRecord = false;
+
+	HME.createH264MP4Encoder().then(async encoder => {
+		encoder.width = canvas.width;
+		encoder.height = canvas.height;
+		encoder.frameRate = fRate;
+		encoder.initialize();
+		
+		console.log(chunks);
+		for (let i = 0; i < chunks.length; i++) {
+			encoder.addFrameRgba(chunks[i]);
+		}
+
+		encoder.finalize();
+		const uint8Array = encoder.FS.readFile(encoder.outputFilename);
+		var blob = new Blob([uint8Array], { type: "video/mp4" });
+		var filename = "video.mp4";
 		var a = document.createElement("a"),
 		url = URL.createObjectURL(blob);
 		a.href = url;
@@ -27,61 +51,13 @@ mediaRecorder.onstop = function(e) {
 		setTimeout(function() {
 			document.body.removeChild(a);
 			window.URL.revokeObjectURL(url);  
-		}, 0); 
-	}
-};
+		}, 0);
+		encoder.delete();
+	})
 
-function startRecord() {
-	var t = document.getElementById("time").value;
-	t = t.replaceAll("PI","Math.PI");
-	videoLength = eval(t);
-	videoTime = time;
-	isRecord = true;
-
-	mediaRecorder.start();
-}
-function runRecord() {
-	const percent = Math.floor(100*(time-videoTime)/videoLength);
-	document.getElementById("record").style.backgroundSize = percent+"%,100%";
-}
-function stopRecord() {
-	isRecord = false;
-	mediaRecorder.stop();
 	document.getElementById("record").style.backgroundSize = "0%,100%";
 }
 
-
-
-
-// var isRecord = false;
-// var videoTime = 0;
-// var videoLength = Math.PI*2;
-// var encoder;
-// var rec_ctx;
-
-// function startRecord() {
-// 	var t = document.getElementById("time").value;
-// 	t = t.replaceAll("PI","Math.PI");
-// 	videoLength = eval(t);
-// 	videoTime = time;
-// 	isRecord = true;
-// 	rec_ctx = document.getElementById("canvasShaded").getContext("2d");
-
-// 	encoder = new GIFEncoder();
-// 	encoder.setRepeat(0);
-// 	encoder.setDelay(0);
-// 	encoder.start();
-// }
-// function runRecord() {
-// 	const percent = Math.floor(100*(time-videoTime)/videoLength);
-// 	document.getElementById("record").style.backgroundSize = percent+"%,100%";
-	
-// 	encoder.addFrame(rec_ctx);
-// }
-// function stopRecord() {
-// 	isRecord = false;
-// 	document.getElementById("record").style.backgroundSize = "0%,100%";
-
-// 	encoder.finish();
-// 	encoder.download("video.gif");
-// }
+function getPrint() {
+	window.open(canvas.toDataURL("image/png"));
+}

@@ -36,10 +36,17 @@ canvas {
 	overflow-x: hidden;
 }
 #buttons > * {
-	display: block;
+	display: inline-block;
 	width: 100%;
 	padding: 0px;
 	margin-top: 10px;
+}
+#buttons > hr {
+	margin-bottom: 0;
+}
+#buttons > input[type=range] {
+	margin-bottom: -10px;
+	margin-top: 0px;
 }
 #record {
 	margin-top: 10px;

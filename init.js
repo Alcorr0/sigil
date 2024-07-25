@@ -2,32 +2,11 @@
 //canvas setup
 const canvas = document.getElementById("canvas");
 const glow   = document.getElementById("glow");
-const ctx   = canvas.getContext("2d");
+const ctx    = canvas.getContext("2d");
 
 ctx.strokeStyle = "#ffffff";
 ctx.fillStyle = "#ffffff";
 ctx.lineWidth = 2;
-
-//on resize
-var res;
-function fixRes() {
-	res = {
-		x:window.innerWidth,
-		y:window.innerHeight
-	};
-	canvas.width  = res.x;
-	canvas.height = res.y;
-
-	ctx.strokeStyle = "#ffffff";
-	ctx.fillStyle = "#ffffff";
-	ctx.lineWidth = 2;
-
-	if (isStop)
-		window.requestAnimationFrame(draw);
-
-}
-window.addEventListener('resize', fixRes, true);
-fixRes();
 
 var secs = 0;
 var time = 0;
@@ -39,6 +18,8 @@ var skewY = 0;
 var scale = 1;
 var glowR = 0;
 var glowC = 0;
+var glowB = 1;
+var fRate = 30;
 
 var isStop = false;
 var draw;
@@ -60,14 +41,16 @@ const gpu = initGPU({
 	mode: 'gpu'
 	// mode: 'dev'
 });
+
 const getGlow = gpu.createKernel(
-	function(frame,radius,color,directions,quality) {
+	function(frame,radius,color,directions,quality,bright) {
 		const TPI = Math.PI*2;
 		const k = quality * directions - 15;
 		const x = this.thread.x,
 			  y = this.thread.y,
 			  w = this.output.x,
 			  h = this.output.y;
+
 		var Color = frame[y][x];
 		const prev = Color;
 		for(var d=0; d<TPI; d+=TPI/directions)
@@ -82,10 +65,10 @@ const getGlow = gpu.createKernel(
 				Color.b += col.b;
 				Color.a += col.a;
 			}
-		Color.r /= k;
-		Color.g /= k;
-		Color.b /= k;
-		Color.a /= k;
+		Color.r *= bright/k;
+		Color.g *= bright/k;
+		Color.b *= bright/k;
+		Color.a *= bright/k;
 
 		if(color>0) {
 			var max = Math.max(Color.r, Math.max(Color.g, Color.b)),
@@ -118,19 +101,41 @@ const getGlow = gpu.createKernel(
 			else         {Color.r = V; Color.g = p; Color.b = q;}
 			
 		}
-
 		this.color(
-			/*prev.r+*/Color.r,
-			/*prev.g+*/Color.g,
-			/*prev.b+*/Color.b,
-			/*prev.a+*/Color.a
+			prev.a*prev.r+Color.r,
+			prev.a*prev.g+Color.g,
+			prev.a*prev.b+Color.b,
+			1//prev.a+Color.a
 		);
 	}, {
-		output: [res.x,res.y],
+		dynamicOutput:true,
 		graphical: true
 	}
 );
 
+//on resize
+var res;
+function fixRes() {
+	res = {
+		x:window.innerWidth,
+		y:window.innerHeight
+	};
+	canvas.width  = res.x;
+	canvas.height = res.y;
+	glow.width  = res.x;
+	glow.height = res.y;
+	getGlow.setOutput([res.x,res.y]);
+
+	ctx.strokeStyle = "#ffffff";
+	ctx.fillStyle = "#ffffff";
+	ctx.lineWidth = 2;
+
+	if (isStop)
+		window.requestAnimationFrame(draw);
+
+}
+window.addEventListener('resize', fixRes, true);
+fixRes();
 //
 function rgbToHsv(r, g, b) {
   r /= 255, g /= 255, b /= 255;
@@ -202,18 +207,31 @@ function getId(val) {
 //①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳
 //▖▗▘▙▚▛▜▝▞▟■
 
-
+var vars = new Map();
+function val(name) {
+	return vars.get(name);
+}
 function parse(str) {
 	str = str.replaceAll("Pi",Math.PI);
 	str = str.replaceAll("nsin(","0.5+0.5*sin(");
 	str = str.replaceAll("ncos(","0.5+0.5*cos(");
 	str = str.replaceAll("sin(","Math.sin(");
 	str = str.replaceAll("cos(","Math.cos(");
+	str = str.replaceAll("tan(","Math.tan(");
 	str = str.replaceAll("floor(","Math.floor(");
 	str = str.replaceAll("round(","Math.round(");
+	str = str.replaceAll("rnd(","Math.random(");
 	str = str.replaceAll("ceil(","Math.ceil(");
+	str = str.replaceAll("pow(","Math.pow(");
 	str = str.replaceAll("Time",time);
 	str = str.replaceAll("Secs",secs);
 	str = str.replaceAll("I","getId()");
 	return eval(str);
 }
+function max(a,b) {
+	return a>b?a:b;
+}
+function min(a,b) {
+	return a<b?a:b;
+}
+//[{"type":"Variable","name":"A","value":"150"},{"type":"Variable","name":"B","value":"15"},{"type":"Variable","name":"C","value":"50"},{"type":"Width","width":"1","children":[{"type":"To Circle","radius":"400","segments":"32","angle A":"0","angle B":"Pi*2","is alternately":false,"children":[{"type":"Move","x":"val(\"B\")","y":"-val(\"A\")","children":[{"type":"Ellipse","radius A":"val(\"A\")","radius B":"val(\"B\")","angle A":"0","angle B":"Pi/2","fill":false}]},{"type":"Move","x":"val(\"B\")","y":"val(\"C\")","children":[{"type":"Ellipse","radius A":"val(\"C\")","radius B":"val(\"B\")","angle A":"Pi/2","angle B":"Pi","fill":false}]},{"type":"Move","x":"-val(\"B\")","y":"val(\"C\")","children":[{"type":"Ellipse","radius A":"val(\"C\")","radius B":"val(\"B\")","angle A":"Pi","angle B":"3*Pi/2","fill":false}]},{"type":"Move","x":"-val(\"B\")","y":"-val(\"A\")","children":[{"type":"Ellipse","radius A":"val(\"A\")","radius B":"val(\"B\")","angle A":"3*Pi/2","angle B":"Pi*2","fill":false}]}]}]},{"type":"Circle","radius":"322","angle A":"0","angle B":"Pi*2","fill":true},{"type":"Transparent","children":[{"type":"Move","x":"0","y":"4","children":[{"type":"Circle","radius":"320","angle A":"0","angle B":"Pi*2","fill":true}]}]}]

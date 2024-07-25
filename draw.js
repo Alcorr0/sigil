@@ -1,21 +1,29 @@
 //MAIN DRAW FUNCTION//
 draw = function() {
+//record
+	if (isRecord) {
+		runRecord();
+		//stop
+		if (time-videoTime>videoLength)
+			stopRecord();
+	}
 //prepare
 	ctx.resetTransform();
 	ctx.fillStyle = "#000000";
-	// ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 	ctx.fillStyle = "#ffffff";
-	ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+	ctx.clearRect(0, 0, res.x, res.y);
 //transform
 	ctx.transform(
 		scale,
 		skewY,
 		skewX,
 		scale,
-		(translateX+2.0-scale*2-skewX)*window.innerWidth/4,
-		(translateY+0.5-scale/2-skewY)*window.innerHeight
+		(translateX+2.0-scale*2-skewX)*res.x/4,
+		(translateY+0.5-scale/2-skewY)*res.y
 	);
-
+	// ctx.imageSmoothingEnabled = false;
+	// ctx.imageSmoothingQuality = "low";
+	// ctx.globalAlpha = 1;
 //time
 	secs += step/Math.PI*2;
 	time += step;
@@ -31,26 +39,24 @@ draw = function() {
 
 	var data = JSON.parse(json);
 
-//record
-	if (isRecord) {
-		runRecord();
-		//stop
-		if (time-videoTime>videoLength)
-			stopRecord();
-	}
 //main
-	move(window.innerWidth/2, window.innerHeight/2, function(){
+	move(res.x/2, res.y/2, function(){
 		arrParse(data);
 	});
 //glow
 	if (glowR>0) {
 		glow.style.display = 'block';
-		getGlow(canvas,glowR,glowC,glowD,glowQ);
+		getGlow(canvas,glowR,glowC,glowD,glowQ,glowB);
 	} else
 		glow.style.display = 'none';
 
 	if (!isStop)
 		window.requestAnimationFrame(draw);
+
+	// ctx.putImageData(ctx.getImageData(0, 0, canvas.width, canvas.height), res.x, res.y);
+	// console.log(ctx.getImageData(0, 0, canvas.width, canvas.height));
+
+	// ctx.drawImage(ctx.getImageData(0, 0, canvas.width, canvas.height).data,0,0);
 }
 
 function controlsUpdate(el) {
@@ -75,8 +81,10 @@ function controlsUpdate(el) {
 		case 'glowC':		glowC = v; 		break;
 		case 'glowD':		glowD = v; 		break;
 		case 'glowQ':		glowQ = v; 		break;
+		case 'glowB':		glowB = v; 		break;
+		case 'fRate': document.getElementById("fRateL").innerText = "FrmRate "+v;
+							fRate = v;		break;
 		}
-		// console.log(v);
 
 		if (isStop)
 			window.requestAnimationFrame(draw);
@@ -91,6 +99,8 @@ function controlsUpdate(el) {
 		controlsUpdate(document.getElementById("glowC"));
 		controlsUpdate(document.getElementById("glowD"));
 		controlsUpdate(document.getElementById("glowQ"));
+		controlsUpdate(document.getElementById("glowB"));
+		controlsUpdate(document.getElementById("fRate"));
 	}
 }
 controlsUpdate();window.requestAnimationFrame(draw);

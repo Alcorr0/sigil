@@ -20,6 +20,11 @@ function rgbToHex(r, g, b, a) {
 }
 
 
+function variable(name,value) {
+	vars.set(name,value);
+	// console.log(vars);
+	// eval();
+}
 function condition(expr,func) {
 	if (parse(expr))
 		func();
@@ -123,6 +128,29 @@ function toLine(l,c,o,a,func) {
 	getId(0);
 	j_depth--;
 }
+function toEllipse(ra,rb,c,aa=0,ab=Math.PI*2,func) {
+	j_depth++;
+	ab += aa;
+	
+	if (aa>ab) {
+		var b = ab;
+		ab = aa;
+		aa=b;
+	}
+
+	var step = Math.PI*2/c;
+	for (var a=aa; a<ab-0.01; a+=step) {
+		ctx.save();
+		ctx.translate(ra*Math.cos(a),-rb*Math.sin(a));
+		// ctx.rotate(a+Math.PI/2);
+
+		func();
+
+		ctx.restore();
+	}
+	getId(0);
+	j_depth--;
+}
 
 //single forms 
 function text(w,s,a) {
@@ -189,9 +217,9 @@ function circle(r, aa=0,ab=Math.PI*2, fill) {
 	ctx.closePath();
 	if(fill) ctx.fill();
 }
-function ellipse(ra,rb,a, fill) {
+function ellipse(ra,rb, aa=0,ab=Math.PI*2, fill) {
 	ctx.beginPath();
-	ctx.ellipse(0,0, ra,rb, a+Math.PI/2, 0,Math.PI*2);
+	ctx.ellipse(0,0, ra,rb, Math.PI/2, aa,ab);
 	ctx.stroke();
 	ctx.closePath();
 	if(fill) ctx.fill();
@@ -211,6 +239,24 @@ function lettersCircle(r,w,s,d=1,a) {
 				else
 					ctx.fillText(ch,-w/4,w/4)
 			})
+		});
+
+		ctx.restore();
+	}
+}
+function lettersEllipse(ra,rb,w,s,d=1,as) {
+	var c = s.length*d;
+	ctx.font = w+"px serif";
+	for (var i=0; i<c; i++) {
+		var ch = s.charAt(i%s.length);
+		ctx.save();
+		const a = i*Math.PI*2/c+as;
+
+		move(ra*Math.cos(a),-rb*Math.sin(a),function(){
+			if(ch == ch.toUpperCase())
+				ctx.fillText(ch,-w/4-w/16,w/4+w/16)
+			else
+				ctx.fillText(ch,-w/4,w/4)
 		});
 
 		ctx.restore();
@@ -277,5 +323,15 @@ function radialCircle(ra,rb,c,aa=0,ab=Math.PI*2) {
 		ctx.closePath();
 
 		ctx.restore();
+	}
+}
+var images = new Map();
+function image(x,y,w,h,src) {
+	if(images.has(src)) {
+		ctx.drawImage(images.get(src),x,y,w,h);
+	} else {
+		var img = new Image(w,h);
+		img.src = src;
+		images.set(src,img);
 	}
 }
