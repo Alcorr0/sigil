@@ -330,8 +330,17 @@ function image(x,y,w,h,src) {
 	if(images.has(src)) {
 		ctx.drawImage(images.get(src),x,y,w,h);
 	} else {
-		var img = new Image(w,h);
-		img.src = src;
+		var img;
+		window.fetch(src)
+		.then(resp => resp.blob())
+		.then(blob => {
+			const urlFromBlob = window.URL.createObjectURL(blob);
+			img = new window.Image()
+			img.src = urlFromBlob;
+			img.crossOrigin = 'Anonymous';
+		});
+		// var img = new Image(w,h);
+		// img.src = src;
 		images.set(src,img);
 	}
 }
