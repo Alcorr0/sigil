@@ -18,7 +18,7 @@ function startRecord() {
 function runRecord() {
 	const percent = Math.floor(100*(time-videoTime)/videoLength);
 	
-	getGlow(canvas,glowR,glowC,glowD,glowQ,glowB);
+	getGlow(canvas,glowR,glowC,glowD,glowQ,glowB,cnvBack,cnvFront);
 	const pixels = getGlow.getPixels(false);
 	chunks.push(pixels);
 
@@ -33,7 +33,7 @@ function stopRecord() {
 		encoder.frameRate = fRate;
 		encoder.initialize();
 		
-		console.log(chunks);
+		// console.log(chunks);
 		for (let i = 0; i < chunks.length; i++) {
 			encoder.addFrameRgba(chunks[i]);
 		}

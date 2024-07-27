@@ -11,6 +11,9 @@ canvas {
 	width:  100vw;
 	height: 100vh;
 }
+#back, #front {
+	display: none;
+}
 #interface {
 	margin-top: 10px;
 	width:100%;
@@ -99,15 +102,15 @@ ul {
 }
 .childrenList {
 	border-radius: 5px;
-  margin: 5px 0 10px 20px;
+	margin: 5px 0 10px 20px;
 }
 .childrenList:not(:has(li)) {
-  border: solid 2px #8888;
-  min-height: 20px;
+	border: solid 2px #8888;
+	min-height: 20px;
 }
 #hover {
 	height: 0;
-  margin: 0;
+	margin: 0;
 }
 .childrenList > li,
 #hover > li{
@@ -125,12 +128,12 @@ li {
 	transition: transform ease-in 0.3s;
 }
 .nodeName{
-  border-radius: 5px;
-  padding: 3px 7px;
+	border-radius: 5px;
+	padding: 3px 7px;
 }
 .nodeName:hover{
 	border: solid 2px #888;
-  padding: 1px 5px;
+	padding: 1px 5px;
 }
 
 #hover > #place{
@@ -147,8 +150,8 @@ li {
 .ghost{display:none;}
 li.selected {
 	background-color: #fff4 !important;
-  /*transition: 0.01s;
-  transform: translateX(-9999px);*/
+	/*transition: 0.01s;
+	transform: translateX(-9999px);*/
 }
 
 input[type="text"], button, select {
@@ -156,21 +159,29 @@ input[type="text"], button, select {
 	border: solid 2px #888;
 	background-color: #eee;
 	width: 90%;
-  float: right;
-  padding: 0 5px;
-  border: 0;
+	float: right;
+	padding: 0 5px;
+	border: 0;
+}
+input[type="file"] {
+	border-radius: 5px;
+	border: solid 2px #888;
+	width: 90%;
+	float: right;
+	padding: 0 5px;
+	border: 0;
 }
 input[type="text"]:hover, button:hover {
 	background-color: #ccc;
 }
 input[type="checkbox"] {
 	appearance: none;
-  display: block;
-  width: 25px;
-  background-color: #fff;
-  border-radius: 5px;
-  margin: 0;
-  margin-left: calc(10% - 10px);
+	display: block;
+	width: 25px;
+	background-color: #fff;
+	border-radius: 5px;
+	margin: 0;
+	margin-left: calc(10% - 10px);
 }
 #shareInout {
 	padding-block: 2px;
@@ -184,7 +195,7 @@ button:active {
 .nodeNum {
 	margin-left: 5px;
 	color: #fff8;
-  font-size: 10px;
+	font-size: 10px;
 }
 .node {
 	position:relative;
@@ -210,23 +221,23 @@ button:active {
 	background-color: #a00;
 }
 .remove:after {
-  display: inline-block;
-  content: "\00d7";
-  font-size: 17px;
-  font-weight: 700;
+	display: inline-block;
+	content: "\00d7";
+	font-size: 17px;
+	font-weight: 700;
 }
 .addBtn{
 	float: right;
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 	width:  20px;
 	height: 20px;
 	border-radius: 25%;
 	color: #888;
-  padding: 0 0 2px 0;
-  line-height: 0px;
+	padding: 0 0 2px 0;
+	line-height: 0px;
 	font-size: 17px;
-  font-weight: 700;
-  background-color: transparent;
+	font-weight: 700;
+	background-color: transparent;
 }
 .moveButton {
 	position: absolute;
@@ -239,17 +250,17 @@ button:active {
 }
 .moveButton:after {
 	border: solid #888;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  padding: 3px;	
-  content: "";
+	border-width: 0 2px 2px 0;
+	display: inline-block;
+	padding: 3px;	
+	content: "";
 }
 .up:after {
-  transform: rotate(-135deg);
+	transform: rotate(-135deg);
 }
 .down:after {
 	margin-bottom: 3px;
-  transform: rotate(45deg);
+	transform: rotate(45deg);
 }
 li > .node > .remove:hover {
 	background-color: #c22;
@@ -278,20 +289,20 @@ li:hover > .add > .addBtn {
 	display: block;
 }
 @keyframes slideInOut { 
-  0% { 
-    opacity: 0; 
-    visibility: hidden;
-  } 
+	0% { 
+		opacity: 0; 
+		visibility: hidden;
+	} 
 
-  50% { 
-    opacity: 0.5; 
-    visibility: visible;
-  } 
+	50% { 
+		opacity: 0.5; 
+		visibility: visible;
+	} 
 
-  100% { 
-    opacity: 1; 
-    visibility: visible;
-  } 
+	100% { 
+		opacity: 1; 
+		visibility: visible;
+	} 
 } 
 
 
@@ -338,10 +349,10 @@ tr.property > td > * {
 #addMenu{
 	position: relative;
 	display: flex;
-  width: 100px;
-  flex-direction: column;
+	width: 100px;
+	flex-direction: column;
 	border: solid 2px #000;
-  border-radius: 10px;
+	border-radius: 10px;
 	background-color: #fff4;
 	height: fit-content;
 	padding: 0 20px;
@@ -364,7 +375,7 @@ tr.property > td > * {
 	height: 0;
 	overflow: hidden;
 	padding: 0 4px;
-  border-width: 0px;
+	border-width: 0px;
 }
 
 #infoButton {
@@ -401,17 +412,17 @@ tr.property > td > * {
 
 
 @media screen and (max-width: 600px) {
-  #addMenu {
-  	position: absolute;
-  }
-  .childrenList,
-  .childrenList > li {
-  	margin: 5px 0;
-  }
-  #addMenu {
-  	background-color: #444;
-  }
-  .remove,
+	#addMenu {
+		position: absolute;
+	}
+	.childrenList,
+	.childrenList > li {
+		margin: 5px 0;
+	}
+	#addMenu {
+		background-color: #444;
+	}
+	.remove,
 	.moveButton,
 	.addBtn {
 		opacity: 1 !important;

@@ -205,7 +205,8 @@ function elementParse(element) {
 			parse(element["y"]),
 			parse(element["width"]),
 			parse(element["height"]),
-			element["image"]
+			element["image"],
+			element["front"]
 		);
 	break;
 	}

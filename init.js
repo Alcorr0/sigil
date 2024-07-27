@@ -4,6 +4,13 @@ const canvas = document.getElementById("canvas");
 const glow   = document.getElementById("glow");
 const ctx    = canvas.getContext("2d");
 
+var imagesBack  = [];
+var imagesFront = [];
+const cnvBack  = document.getElementById("back");
+const ctxBack  = cnvBack.getContext("2d");
+const cnvFront = document.getElementById("front");
+const ctxFront = cnvFront.getContext("2d");
+
 ctx.strokeStyle = "#ffffff";
 ctx.fillStyle = "#ffffff";
 ctx.lineWidth = 2;
@@ -43,7 +50,7 @@ const gpu = initGPU({
 });
 
 const getGlow = gpu.createKernel(
-	function(frame,radius,color,directions,quality,bright) {
+	function(frame,radius,color,directions,quality,bright,back,front) {
 		const TPI = Math.PI*2;
 		const k = quality * directions - 15;
 		const x = this.thread.x,
@@ -53,6 +60,9 @@ const getGlow = gpu.createKernel(
 
 		var Color = frame[y][x];
 		const prev = Color;
+		const backP  = back[y][x];
+		const frontP = front[y][x];
+
 		for(var d=0; d<TPI; d+=TPI/directions)
 			for(var i=1/quality; i<=1; i+=1/quality)
 			{
@@ -65,10 +75,10 @@ const getGlow = gpu.createKernel(
 				Color.b += col.b;
 				Color.a += col.a;
 			}
-		Color.r *= bright/k;
-		Color.g *= bright/k;
-		Color.b *= bright/k;
-		Color.a *= bright/k;
+		Color.r /= k;
+		Color.g /= k;
+		Color.b /= k;
+		Color.a /= k;
 
 		if(color>0) {
 			var max = Math.max(Color.r, Math.max(Color.g, Color.b)),
@@ -102,9 +112,9 @@ const getGlow = gpu.createKernel(
 			
 		}
 		this.color(
-			prev.a*prev.r+Color.r,
-			prev.a*prev.g+Color.g,
-			prev.a*prev.b+Color.b,
+			( (backP.a*backP.r)*(1-prev.a) + prev.a*prev.r + Color.r*bright )*(1-frontP.a) + frontP.a*frontP.r,
+			( (backP.a*backP.g)*(1-prev.a) + prev.a*prev.g + Color.g*bright )*(1-frontP.a) + frontP.a*frontP.g,
+			( (backP.a*backP.b)*(1-prev.a) + prev.a*prev.b + Color.b*bright )*(1-frontP.a) + frontP.a*frontP.b,
 			1//prev.a+Color.a
 		);
 	}, {
@@ -124,6 +134,10 @@ function fixRes() {
 	canvas.height = res.y;
 	glow.width  = res.x;
 	glow.height = res.y;
+	cnvBack.width  = res.x;
+	cnvBack.height = res.y;
+	cnvFront.width  = res.x;
+	cnvFront.height = res.y;
 	getGlow.setOutput([res.x,res.y]);
 
 	ctx.strokeStyle = "#ffffff";
@@ -235,3 +249,15 @@ function min(a,b) {
 	return a<b?a:b;
 }
 //[{"type":"Variable","name":"A","value":"150"},{"type":"Variable","name":"B","value":"15"},{"type":"Variable","name":"C","value":"50"},{"type":"Width","width":"1","children":[{"type":"To Circle","radius":"400","segments":"32","angle A":"0","angle B":"Pi*2","is alternately":false,"children":[{"type":"Move","x":"val(\"B\")","y":"-val(\"A\")","children":[{"type":"Ellipse","radius A":"val(\"A\")","radius B":"val(\"B\")","angle A":"0","angle B":"Pi/2","fill":false}]},{"type":"Move","x":"val(\"B\")","y":"val(\"C\")","children":[{"type":"Ellipse","radius A":"val(\"C\")","radius B":"val(\"B\")","angle A":"Pi/2","angle B":"Pi","fill":false}]},{"type":"Move","x":"-val(\"B\")","y":"val(\"C\")","children":[{"type":"Ellipse","radius A":"val(\"C\")","radius B":"val(\"B\")","angle A":"Pi","angle B":"3*Pi/2","fill":false}]},{"type":"Move","x":"-val(\"B\")","y":"-val(\"A\")","children":[{"type":"Ellipse","radius A":"val(\"A\")","radius B":"val(\"B\")","angle A":"3*Pi/2","angle B":"Pi*2","fill":false}]}]}]},{"type":"Circle","radius":"322","angle A":"0","angle B":"Pi*2","fill":true},{"type":"Transparent","children":[{"type":"Move","x":"0","y":"4","children":[{"type":"Circle","radius":"320","angle A":"0","angle B":"Pi*2","fill":true}]}]}]
+
+
+// function imageToData(img) {
+// 	const cnv = document.createElement("canvas");
+// 	const ctx = cnv.getContext("2d");
+// 	cnv.width  = res.x;
+// 	cnv.height = res.y;
+
+// 	ctx.drawImage(image, 0,0);
+// 	imageData = ctx.getImageData(0,0, res.x,res.y);
+// 	return imageData;
+// }

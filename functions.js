@@ -30,14 +30,14 @@ function condition(expr,func) {
 		func();
 }
 //space transform
-function move(x,y,func) {
+function move(x,y,func,ct=ctx) {
 	j_depth++;
-	ctx.save();
-	ctx.translate(x,y);
+	ct.save();
+	ct.translate(x,y);
 
 	func();
 
-	ctx.restore();
+	ct.restore();
 	getId(0);
 	j_depth--;
 }
@@ -325,22 +325,26 @@ function radialCircle(ra,rb,c,aa=0,ab=Math.PI*2) {
 		ctx.restore();
 	}
 }
-var images = new Map();
-function image(x,y,w,h,src) {
-	if(images.has(src)) {
-		ctx.drawImage(images.get(src),x,y,w,h);
-	} else {
-		var img;
-		window.fetch(src)
-		.then(resp => resp.blob())
-		.then(blob => {
-			const urlFromBlob = window.URL.createObjectURL(blob);
-			img = new window.Image()
-			img.src = urlFromBlob;
-			img.crossOrigin = 'Anonymous';
-		});
-		// var img = new Image(w,h);
-		// img.src = src;
-		images.set(src,img);
+
+function image(x,y,w,h,src,is_f,print=false,ct=ctx) {
+	if(src!="data:image/png;base64") {
+		var img = new Image(w,h);
+		img.src = src;
+		img.crossOrigin = "anonymous";
+		if(print) {
+			ct.drawImage(img,x,y,w,h);
+		} else {
+			imgData = {
+				src: img,
+				x: x,
+				y: y,
+				w: w,
+				h: h
+			};
+			if (is_f)
+				imagesFront.push(imgData);
+			else
+				imagesBack.push(imgData);
+		}
 	}
 }

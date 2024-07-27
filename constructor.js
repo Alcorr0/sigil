@@ -34,6 +34,8 @@ function compileNode(node) {
 		var p_name  = property.children[0].children[0].innerHTML;
 		var p_value = property.children[1].children[0].value;
 		if (p_value == "on") p_value = property.children[1].children[0].checked;
+		const file_data = property.children[1].children[0].getAttribute("data");
+		if (file_data) p_value = file_data;
 
 		data[p_name] = p_value;
 	}
@@ -104,8 +106,25 @@ function add(e, data) {
 			if (typeof def === "boolean") {//костыль для bool
 				new_property.children[1].children[0].type    = "checkbox";
 				new_property.children[1].children[0].checked = def;
-			} else
+			} else if (typeof def === "string" && def.startsWith("data:image/png;base64")) {
+				new_property.children[1].children[0].type    = "file";
+				new_property.children[1].children[0].setAttribute("data",def);
+				new_property.children[1].children[0].onchange = function (evt) {
+					var tgt = evt.target || window.event.srcElement;
+					var files = tgt.files;
+
+					if (FileReader && files && files.length) {
+						var fr = new FileReader();
+						fr.onload = function () {
+							tgt.setAttribute("data",fr.result);
+							compile();
+						}
+						fr.readAsDataURL(files[0]);
+					} else {}
+				}
+			} else{
 				new_property.children[1].children[0].value = def;
+			}
 
 			new_node.getElementsByClassName("propList")[0].appendChild(new_property);
 		}
@@ -214,7 +233,6 @@ function add(e, data) {
 
 	return li;
 }
-
 
 function clr(e) {
 	if (e) {

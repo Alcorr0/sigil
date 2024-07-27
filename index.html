@@ -116,8 +116,8 @@
 			},
 			"Image":{
 				"isChildren":false,
-				"properties":["image","x","y","width","height"],
-				"defaults":["",-50,-50,100,100]
+				"properties":["image","x","y","width","height","front"],
+				"defaults":["data:image/png;base64",-50,-50,100,100,true]
 			}
 		}
 	</script>
@@ -194,7 +194,8 @@
 		}
 	</script>
 
-
+	<canvas id="back"></canvas>
+	<canvas id="front"></canvas>
 	<canvas id="glow"></canvas>
 	<canvas id="canvas"></canvas>
 
@@ -272,14 +273,13 @@
 			<label class="sub">Skew y</label>		<input id="skewY"		type="range" name="skewY"		oninput="controlsUpdate(this)" min="-1" max="1"   step="0.1"  value="0">
 			<label class="sub">Scale</label>		<input id="scale"		type="range" name="scale"		oninput="controlsUpdate(this)" min="0"  max="5"   step="0.1"  value="1">
 			<hr><label class="sub">Glow</label>
-			<label class="sub">radius</label>		<input id="glowR"		type="range" name="glowR"		oninput="controlsUpdate(this)" min="0"  max="50"  step="1"    value="9">
+			<label class="sub">radius</label>		<input id="glowR"		type="range" name="glowR"		oninput="controlsUpdate(this)" min="0"  max="50"  step="0.1"  value="9">
 			<label class="sub">color</label>		<input id="glowC"		type="range" name="glowC"		oninput="controlsUpdate(this)" min="0"  max="1"   step="0.05" value="0.66">
 			<label class="sub">directions</label>	<input id="glowD"		type="range" name="glowD"		oninput="controlsUpdate(this)" min="2"  max="32"  step="1"    value="16">
 			<label class="sub">quality</label>		<input id="glowQ"		type="range" name="glowQ"		oninput="controlsUpdate(this)" min="4"  max="16"  step="0.1"  value="4">
-			<label class="sub">bright</label>		<input id="glowB"		type="range" name="glowB"		oninput="controlsUpdate(this)" min="1"  max="16"  step="0.1"  value="1">
+			<label class="sub">bright</label>		<input id="glowB"		type="range" name="glowB"		oninput="controlsUpdate(this)" min="0"  max="5"   step="0.1"  value="1">
 		</div>
 	</div>
-
 	<button id="infoButton" onclick="showInfo()">i</button>
 	<div id="info">
 		<select id="infoSelect" oninput="info(this)">
@@ -312,6 +312,7 @@
 		</div>
 		<img id="imgInfo" src="">
 	</div>
+	<img id="img" src="">
 	<script type="text/javascript" src="gpu-browser.min.js"></script>
 	<script type="text/javascript" src="init.js"></script>
 	<script type="text/javascript" src="functions.js"></script>

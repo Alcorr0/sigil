@@ -1,5 +1,41 @@
 //MAIN DRAW FUNCTION//
 draw = function() {
+//back images
+	if (imagesBack.length > 0) {
+		move(res.x/2, res.y/2, function(){
+			for (const img of imagesBack) {
+				image(
+					img.x,
+					img.y,
+					img.w,
+					img.h,
+					img.src.src,
+					true,
+					true,
+					ctxBack
+				);
+			}
+		}, ctxBack);
+		imagesBack = [];
+	}
+//front images
+	if (imagesFront.length > 0) {
+		move(res.x/2, res.y/2, function(){
+			for (const img of imagesFront) {
+				image(
+					img.x,
+					img.y,
+					img.w,
+					img.h,
+					img.src.src,
+					true,
+					true,
+					ctxFront
+				);
+			}
+		}, ctxFront);
+		imagesFront = [];
+	}
 //record
 	if (isRecord) {
 		runRecord();
@@ -9,21 +45,27 @@ draw = function() {
 	}
 //prepare
 	ctx.resetTransform();
+	ctxBack.resetTransform();
+	ctxFront.resetTransform();
 	ctx.fillStyle = "#000000";
 	ctx.fillStyle = "#ffffff";
 	ctx.clearRect(0, 0, res.x, res.y);
 //transform
 	ctx.transform(
-		scale,
-		skewY,
-		skewX,
-		scale,
+		scale,skewY,skewX,scale,
 		(translateX+2.0-scale*2-skewX)*res.x/4,
 		(translateY+0.5-scale/2-skewY)*res.y
 	);
-	// ctx.imageSmoothingEnabled = false;
-	// ctx.imageSmoothingQuality = "low";
-	// ctx.globalAlpha = 1;
+	ctxBack.transform(
+		scale,skewY,skewX,scale,
+		(translateX+2.0-scale*2-skewX)*res.x/4,
+		(translateY+0.5-scale/2-skewY)*res.y
+	);
+	ctxFront.transform(
+		scale,skewY,skewX,scale,
+		(translateX+2.0-scale*2-skewX)*res.x/4,
+		(translateY+0.5-scale/2-skewY)*res.y
+	);
 //time
 	secs += step/Math.PI*2;
 	time += step;
@@ -46,9 +88,15 @@ draw = function() {
 //glow
 	if (glowR>0) {
 		glow.style.display = 'block';
-		getGlow(canvas,glowR,glowC,glowD,glowQ,glowB);
-	} else
+		canvas.style.display = 'none';
+		getGlow(canvas,glowR,glowC,glowD,glowQ,glowB,cnvBack,cnvFront);
+	} else {
 		glow.style.display = 'none';
+		canvas.style.display = 'block';
+	}
+
+	ctxBack.clearRect(0, 0, res.x, res.y);
+	ctxFront.clearRect(0, 0, res.x, res.y);
 
 	if (!isStop)
 		window.requestAnimationFrame(draw);
