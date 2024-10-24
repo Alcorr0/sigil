@@ -1,9 +1,8 @@
 //record setup
 var isRecord = false;
+var isPrint  = false;
 var videoTime = 0;
 var videoLength = Math.PI*2;
-var videoStream = document.getElementById("canvas").captureStream(30);
-var mediaRecorder = new MediaRecorder(videoStream);
 var chunks = [];
 
 function startRecord() {
@@ -59,5 +58,10 @@ function stopRecord() {
 }
 
 function getPrint() {
-	window.open(canvas.toDataURL("image/png"));
+	isPrint = true;
+	window.requestAnimationFrame(draw);
+}
+function runPrint() {
+	window.open(glow.toDataURL("image/png"));
+	isPrint = false;
 }
