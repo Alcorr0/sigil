@@ -118,8 +118,9 @@ function toLine(l,c,o,a,func) {
 	var stepA=a/c;
 	for(var i=o; i<c; i++) {
 		ctx.save();
-		ctx.rotate(stepA*i);
+		ctx.rotate(Math.PI/2+stepA*i);
 		ctx.translate(0,-stepL*i);
+		ctx.rotate(-Math.PI/2);
 		
 		func();
 
@@ -147,6 +148,23 @@ function toEllipse(ra,rb,c,aa=0,ab=Math.PI*2,func) {
 		func();
 
 		ctx.restore();
+	}
+	getId(0);
+	j_depth--;
+}
+function fun(a,b,c,func) {
+	j_depth++;
+	
+	if (a>b) {
+		var bb = b;
+		b = a;
+		a=bb;
+	}
+
+	var step = (b-a)/c;
+	for (var i=a; i<b; i+=step) {
+		variable("i",i);
+		func();
 	}
 	getId(0);
 	j_depth--;
@@ -211,6 +229,11 @@ function line(x,y,dx=0,dy=0) {
 
 //circles
 function circle(r, aa=0,ab=Math.PI*2, fill) {
+	if(aa>ab) {
+		var a = aa;
+		aa = ab;
+		ab = a;
+	}
 	ctx.beginPath();
 	ctx.arc(0,0, r, aa,ab);
 	ctx.stroke();
@@ -347,4 +370,69 @@ function image(x,y,w,h,src,is_f,print=false,ct=ctx) {
 				imagesBack.push(imgData);
 		}
 	}
+}
+
+function star(w,ha,hb) {
+	move(w,-ha,function(){ellipse(ha,w, aa=0,ab=Math.PI/2, false);});
+	move(w,hb,function(){ellipse(hb,w, aa=Math.PI/2,ab=Math.PI, false);});
+	move(-w,hb,function(){ellipse(hb,w, aa=Math.PI,ab=3*Math.PI/2, false);});
+	move(-w,-ha,function(){ellipse(ha,w, aa=3*Math.PI/2,ab=Math.PI*2, false);});
+}
+
+
+
+function note(r,p,h,type,dx,dy,ct=ctx) {
+	//type	0	1	2	3	4	5	6
+	//		o	.	♩	♪	♪♪	♪♪♪	♪♪♪♪	♫	♬	♭♮♯
+
+	move(0,-p,function(){
+		rotate(-Math.PI/4,function(){ellipse(r*0.8,r*1.2, 0,Math.PI*2, type>1)});
+		if(type>0) {
+			line(r,0,0,-h);
+			for (var i=0; i<type-2; i++) {
+				if(dx==0) {
+					move(10,-h+i*h*0.2,function(){
+						rotate(Math.PI/2,function(){
+							customLine(
+								0,h*0.7,10,
+								function(i){return -20+Math.sin((i+4)*Math.PI/8)*20},
+								function(i){return min(0,-35+Math.pow(i-9,2))},
+								true
+							)
+						})
+					})
+				} else {
+					const f_h = 10;
+					move(r,-h+i*f_h*1.5,function(){
+						customLine(
+							0,dx,2,
+							function(i){return i*dy},
+							function(i){return i*dy+f_h},
+							true
+						)
+					})
+				}
+			}
+		}
+	});
+
+}
+
+function customLine(a,b,c,funA,funB,fill) {
+	if (a>b) { var bb=b; b=a; a=bb; }
+	var step = (b-a)/c;
+
+	ctx.beginPath();
+	ctx.moveTo(0,0);
+
+	for (var i=0; i<=c; i++)
+		ctx.lineTo(a+step*i,funA(i));
+	for (var i=c; i>=0; i--)
+		ctx.lineTo(a+step*i,funB(i));
+
+	ctx.lineTo(0,0);
+	ctx.stroke();
+
+	ctx.closePath();
+	if(fill) ctx.fill();
 }

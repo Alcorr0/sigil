@@ -425,14 +425,14 @@ function showInfo() {
 }
 
 function info(e) {
+	showInfo();
 	var style;
 	const list = JSON.parse(document.getElementById("infoData").innerHTML);
-
-	const data = list[e.value];
-
-	// var textNode = document.getElementById("infoText");
-	// textNode.innerHTML = data.text;
-	var imgNode  = document.getElementById("imgInfo");
-	imgNode.src        = data.src;
+	const data = list[e];
+	field_share.value = data;
+	imp();
+	const glow_radius = document.getElementById("glowR");
+	glow_radius.value = 0;
+	controlsUpdate(glow_radius);
+	window.requestAnimationFrame(draw);
 }
-info(document.getElementById("infoSelect"));

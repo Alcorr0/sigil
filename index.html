@@ -41,18 +41,23 @@
 			},
 			"To Circle":{
 				"isChildren":true,
-				"properties":["radius","segments","angle A","angle B","is alternately"],
+				"properties":["radius","segments","angle A","angle B","separate"],
 				"defaults":[100,16,0,"Pi*2",false]
 			},
 			"To Line":{
 				"isChildren":true,
-				"properties":["length","segments","offset","angle","is alternately"],
+				"properties":["length","segments","offset","angle","separate"],
 				"defaults":[100,4,0,0,false]
 			},
 			"To Ellipse":{
 				"isChildren":true,
-				"properties":["radius A","radius B","segments","angle A","angle B","is alternately"],
+				"properties":["radius A","radius B","segments","angle A","angle B","separate"],
 				"defaults":[100,50,16,0,"Pi*2",false]
+			},
+			"Function":{
+				"isChildren":true,
+				"properties":["from","to","segments","separate"],
+				"defaults":[0,10,10,false]
 			},
 			"Variable":{
 				"isChildren":false,
@@ -72,7 +77,7 @@
 			"Number":{
 				"isChildren":false,
 				"properties":["width","expression"],
-				"defaults":[50,"Id"]
+				"defaults":[50,"I"]
 			},
 			"Line":{
 				"isChildren":false,
@@ -118,79 +123,47 @@
 				"isChildren":false,
 				"properties":["image","x","y","width","height","front"],
 				"defaults":["data:image/png;base64",-50,-50,100,100,true]
+			},
+			"Star":{
+				"isChildren":false,
+				"properties":["width","height A","height B"],
+				"defaults":[20,100,50]
+			},
+			"Note":{
+				"isChildren":false,
+				"properties":["radius","pitch","height","note type","dx","dy"],
+				"defaults":[10,0,100,2,0,0]
+			},
+			"Custom line":{
+				"isChildren":false,
+				"properties":["from","to","segments","function A","function B","symmetric","fill"],
+				"defaults":[0,10,10,"i","-i",true,false]
 			}
 		}
 	</script>
 	<script id="infoData" type="application/json">
 		{
-			"move":{
-				"text":"moves coordinates",
-				"src":"img/move.png"
-			},
-			"rotate":{
-				"text":"rotates coordinates",
-				"src":"img/rotate.png"
-			},
-			"colorHSV":{
-				"text":"changes color",
-				"src":"img/colorHSV.png"
-			},
-			"colorRGB":{
-				"text":"changes color",
-				"src":"img/colorRGB.png"
-			},
-			"width":{
-				"text":"changes width",
-				"src":"img/width.png"
-			},
-			"toCircle":{
-				"text":"repeats subelements in the form of an arc",
-				"src":"img/toCircle.png"
-			},
-			"toLine":{
-				"text":"repeats subelements in the form of an line",
-				"src":"img/toLine.png"
-			},
-			"text":{
-				"text":"prints text",
-				"src":"img/text.png"
-			},
-			"randomText":{
-				"text":"prints string of random letters from list with given seed",
-				"src":"img/randomText.png"
-			},
-			"number":{
-				"text":"prints math expression",
-				"src":"img/number.png"
-			},
-			"line":{
-				"text":"line between coordinates",
-				"src":"img/line.png"
-			},
-			"circle":{
-				"text":"prints a circle or an arc with given start and end angles",
-				"src":"img/circle.png"
-			},
-			"ellipse":{
-				"text":"prints an ellipse",
-				"src":"img/ellipse.png"
-			},
-			"lettersCircle":{
-				"text":"prints the text in a circle a given number of times",
-				"src":"img/lettersCircle.png"
-			},
-			"randLettersCircle":{
-				"text":"prints string of random letters from a list",
-				"src":"img/randLettersCircle.png"
-			},
-			"polygon":{
-				"text":"prints polygon with given number of edges",
-				"src":"img/polygon.png"
-			},
-			"radialCircle":{
-				"text":"prints lines in a circle",
-				"src":"img/radialCircle.png"
-			}
+			"Transparent":				"[{\"type\":\"Circle\",\"radius\":\"100\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":true},{\"type\":\"Transparent\",\"children\":[{\"type\":\"Width\",\"width\":\"20\",\"children\":[{\"type\":\"Polygon\",\"radius\":\"100\",\"segments\":\"4\",\"fill\":false}]},{\"type\":\"Move\",\"x\":\"-12\",\"y\":\"-20\",\"children\":[{\"type\":\"Text\",\"width\":\"10\",\"text\":\"for\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"-42\",\"y\":\"-10\",\"children\":[{\"type\":\"Text\",\"width\":\"10\",\"text\":\"background\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"-47\",\"y\":\"0\",\"children\":[{\"type\":\"Text\",\"width\":\"10\",\"text\":\"and correct\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"-30\",\"y\":\"10\",\"children\":[{\"type\":\"Text\",\"width\":\"10\",\"text\":\"glowing\",\"angle\":\"0\"}]}]}]",
+			"Move":						"[{\"type\":\"Circle\",\"radius\":\"10\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"Move\",\"x\":\"100\",\"y\":\"-50\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"0\",\"green\":\"1\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Circle\",\"radius\":\"10\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false}]}]},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"-50\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"-50\"},{\"type\":\"Move\",\"x\":\"40\",\"y\":\"10\",\"children\":[{\"type\":\"Text\",\"width\":\"15\",\"text\":\"X100\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"120\",\"y\":\"-45\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"Text\",\"width\":\"15\",\"text\":\"Y-50\",\"angle\":\"0\"}]}]},{\"type\":\"Rotate\",\"angle\":\"-0.463647609\",\"children\":[{\"type\":\"Move\",\"x\":\"111.8\",\"y\":\"0\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"Pi/4\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"8\"}]},{\"type\":\"Rotate\",\"angle\":\"-Pi/4\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"-8\"}]}]}]}]}]}]",
+			"Rotate":					"[{\"type\":\"Polygon\",\"radius\":\"50\",\"segments\":\"4\",\"fill\":false},{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"Move\",\"x\":\"0\",\"y\":\"-100\",\"children\":[{\"type\":\"Star\",\"width\":\"20\",\"height A\":\"50\",\"height B\":\"50\"}]}]},{\"type\":\"Color RGB\",\"red\":\"0\",\"green\":\"1\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"Pi/4+sin(Time)*Pi/2\",\"children\":[{\"type\":\"Polygon\",\"radius\":\"50\",\"segments\":\"4\",\"fill\":false}]},{\"type\":\"Rotate\",\"angle\":\"-Pi/4+sin(Time)*Pi/2\",\"children\":[{\"type\":\"Move\",\"x\":\"0\",\"y\":\"-100\",\"children\":[{\"type\":\"Star\",\"width\":\"20\",\"height A\":\"50\",\"height B\":\"50\"}]}]}]},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Circle\",\"radius\":\"150\",\"angle A\":\"sin(Time)*Pi/2-3*Pi/4\",\"angle B\":\"0\",\"fill\":false},{\"type\":\"Rotate\",\"angle\":\"sin(Time)*Pi/2-3*Pi/4\",\"children\":[{\"type\":\"Line\",\"x\":\"150\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"150\",\"y\":\"0\",\"dx\":\"10\",\"dy\":\"10\"}]},{\"type\":\"Rotate\",\"angle\":\"sin(Time)*Pi/4+Pi/8\",\"children\":[{\"type\":\"Move\",\"x\":\"-100\",\"y\":\"-160\",\"children\":[{\"type\":\"Text\",\"width\":\"15\",\"text\":\"angle = 3*Pi/4\",\"angle\":\"0\"}]}]},{\"type\":\"Circle\",\"radius\":\"3\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":true}]}]}]",
+			"Color RGB":				"[{\"type\":\"Move\",\"x\":\"-100\",\"y\":\"100\",\"children\":[{\"type\":\"To Line\",\"length\":\"200\",\"segments\":\"10\",\"offset\":\"0\",\"angle\":\"0\",\"separate\":false,\"children\":[{\"type\":\"Variable\",\"name\":\"A\",\"value\":\"I\"},{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"To Line\",\"length\":\"200\",\"segments\":\"10\",\"offset\":\"0\",\"angle\":\"0\",\"separate\":false,\"children\":[{\"type\":\"Variable\",\"name\":\"B\",\"value\":\"I\"},{\"type\":\"Color RGB\",\"red\":\"val(\\\"B\\\")/10\",\"green\":\"val(\\\"A\\\")/10\",\"blue\":\"nsin(Time)\",\"alpha\":\"1\",\"children\":[{\"type\":\"Circle\",\"radius\":\"5\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":true}]}]}]}]}]},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Move\",\"x\":\"-110\",\"y\":\"110\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"200\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"-200\"},{\"type\":\"Line\",\"x\":\"200\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"200\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-200\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-200\",\"dx\":\"10\",\"dy\":\"10\"}]},{\"type\":\"Move\",\"x\":\"-80\",\"y\":\"120\",\"children\":[{\"type\":\"Text\",\"width\":\"20\",\"text\":\"red\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"-120\",\"y\":\"70\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"-Pi/2\",\"children\":[{\"type\":\"Text\",\"width\":\"20\",\"text\":\"green\",\"angle\":\"0\"}]}]},{\"type\":\"Move\",\"x\":\"-80\",\"y\":\"-100\",\"children\":[{\"type\":\"Text\",\"width\":\"20\",\"text\":\"blue=\",\"angle\":\"0\"},{\"type\":\"Move\",\"x\":\"90\",\"y\":\"5\",\"children\":[{\"type\":\"Number\",\"width\":\"20\",\"expression\":\"floor((nsin(Time)+0.005)*100)/100\"}]}]}]}]}]",
+			"Color HSV":				"[{\"type\":\"To Circle\",\"radius\":\"0\",\"segments\":\"16\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"separate\":false,\"children\":[{\"type\":\"Variable\",\"name\":\"A\",\"value\":\"I\"},{\"type\":\"To Line\",\"length\":\"100\",\"segments\":\"10\",\"offset\":\"0\",\"angle\":\"0\",\"separate\":false,\"children\":[{\"type\":\"Variable\",\"name\":\"B\",\"value\":\"I\"},{\"type\":\"Color HSV\",\"hue\":\"val(\\\"A\\\")/16\",\"saturation\":\"nsin(Time)\",\"value\":\"val(\\\"B\\\")/10\",\"alpha\":\"1\",\"children\":[{\"type\":\"Circle\",\"radius\":\"5\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":true}]}]}]},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"-100\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-100\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-100\",\"dx\":\"10\",\"dy\":\"10\"}]},{\"type\":\"Circle\",\"radius\":\"100\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"Move\",\"x\":\"100\",\"y\":\"0\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"}]}]},{\"type\":\"Move\",\"x\":\"5\",\"y\":\"-10\",\"children\":[{\"type\":\"Text\",\"width\":\"20\",\"text\":\"value\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"70\",\"y\":\"90\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"-Pi/4\",\"children\":[{\"type\":\"Text\",\"width\":\"20\",\"text\":\"hue\",\"angle\":\"0\"}]}]},{\"type\":\"Move\",\"x\":\"-90\",\"y\":\"-110\",\"children\":[{\"type\":\"Text\",\"width\":\"15\",\"text\":\"saturation=\",\"angle\":\"0\"},{\"type\":\"Move\",\"x\":\"160\",\"y\":\"5\",\"children\":[{\"type\":\"Number\",\"width\":\"15\",\"expression\":\"floor((nsin(Time)+0.005)*100)/100\"}]}]}]}]}]",
+			"Width":					"[{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"-75\",\"y\":\"35\",\"dx\":\"150\",\"dy\":\"0\"}]},{\"type\":\"Width\",\"width\":\"10\",\"children\":[{\"type\":\"Circle\",\"radius\":\"100\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false}]},{\"type\":\"Line\",\"x\":\"-75\",\"y\":\"-35\",\"dx\":\"150\",\"dy\":\"0\"},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Move\",\"x\":\"-75\",\"y\":\"-42\",\"children\":[{\"type\":\"Text\",\"width\":\"15\",\"text\":\"default = 2\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"-70\",\"y\":\"28\",\"children\":[{\"type\":\"Text\",\"width\":\"15\",\"text\":\"width = 1\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"-70\",\"y\":\"-115\",\"children\":[{\"type\":\"Text\",\"width\":\"15\",\"text\":\"width = 10\",\"angle\":\"0\"}]}]}]}]",
+			"To Circle":				"[{\"type\":\"Move\",\"x\":\"-150\",\"y\":\"0\",\"children\":[{\"type\":\"To Circle\",\"radius\":\"100\",\"segments\":\"15\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"separate\":true,\"children\":[{\"type\":\"Circle\",\"radius\":\"10\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"Star\",\"width\":\"10\",\"height A\":\"10\",\"height B\":\"10\"},{\"type\":\"Polygon\",\"radius\":\"10\",\"segments\":\"4\",\"fill\":false}]}]},{\"type\":\"Move\",\"x\":\"150\",\"y\":\"0\",\"children\":[{\"type\":\"To Circle\",\"radius\":\"100\",\"segments\":\"15\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"separate\":false,\"children\":[{\"type\":\"Circle\",\"radius\":\"10\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"Star\",\"width\":\"10\",\"height A\":\"10\",\"height B\":\"10\"},{\"type\":\"Polygon\",\"radius\":\"10\",\"segments\":\"4\",\"fill\":false}]}]},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Move\",\"x\":\"-150\",\"y\":\"0\",\"children\":[{\"type\":\"To Circle\",\"radius\":\"120\",\"segments\":\"15\",\"angle A\":\"-0.03\",\"angle B\":\"Pi*2\",\"separate\":false,\"children\":[{\"type\":\"Number\",\"width\":\"15\",\"expression\":\"I+1\"}]},{\"type\":\"Circle\",\"radius\":\"100\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false}]},{\"type\":\"Move\",\"x\":\"-220\",\"y\":\"0\",\"children\":[{\"type\":\"Text\",\"width\":\"10\",\"text\":\"separate=false\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"90\",\"y\":\"0\",\"children\":[{\"type\":\"Text\",\"width\":\"10\",\"text\":\"separate=false\",\"angle\":\"0\"}]}]}]}]",
+			"To Line":					"[{\"type\":\"Move\",\"x\":\"0\",\"y\":\"100\",\"children\":[{\"type\":\"To Line\",\"length\":\"200\",\"segments\":\"9\",\"offset\":\"0\",\"angle\":\"sin(Time)*Pi/2\",\"separate\":true,\"children\":[{\"type\":\"Circle\",\"radius\":\"10\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"Star\",\"width\":\"5\",\"height A\":\"10\",\"height B\":\"10\"},{\"type\":\"Polygon\",\"radius\":\"10\",\"segments\":\"4\",\"fill\":false}]},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"sin(Time)*Pi/2\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"-200\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-200\",\"dx\":\"10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-200\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Move\",\"x\":\"-10\",\"y\":\"-50\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"-Pi/2\",\"children\":[{\"type\":\"Text\",\"width\":\"15\",\"text\":\"length\",\"angle\":\"0\"}]}]}]},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"200\",\"dy\":\"0\"},{\"type\":\"Circle\",\"radius\":\"20\",\"angle A\":\"0\",\"angle B\":\"sin(Time)*Pi/2-Pi/2\",\"fill\":false},{\"type\":\"Move\",\"x\":\"50\",\"y\":\"-5\",\"children\":[{\"type\":\"Transparent\",\"children\":[{\"type\":\"Width\",\"width\":\"15\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-3\",\"dx\":\"75\",\"dy\":\"0\"}]}]},{\"type\":\"Number\",\"width\":\"15\",\"expression\":\"\\\"angle=\\\"+floor(sin(Time)/2*1000)/1000+\\\"pi\\\"\"}]}]}]}]}]",
+			"To Ellipse":				"[{\"type\":\"To Ellipse\",\"radius A\":\"100\",\"radius B\":\"50\",\"segments\":\"16\",\"angle A\":\"Time\",\"angle B\":\"Pi*2\",\"separate\":true,\"children\":[{\"type\":\"Circle\",\"radius\":\"10\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"Star\",\"width\":\"5\",\"height A\":\"10\",\"height B\":\"10\"}]},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"50\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"50\",\"dx\":\"10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"50\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Move\",\"x\":\"10\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius A\",\"angle\":\"0\"}]},{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"Move\",\"x\":\"5\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius B\",\"angle\":\"0\"}]}]},{\"type\":\"Ellipse\",\"radius A\":\"50\",\"radius B\":\"100\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false}]}]}]",
+			"Text":						"[{\"type\":\"Text\",\"width\":\"50\",\"text\":\"width=50\",\"angle\":\"0\"},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"To Line\",\"length\":\"50*8\",\"segments\":\"8\",\"offset\":\"0\",\"angle\":\"0\",\"separate\":false,\"children\":[{\"type\":\"Circle\",\"radius\":\"3\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":true},{\"type\":\"Rotate\",\"angle\":\"Pi/4\",\"children\":[{\"type\":\"Polygon\",\"radius\":\"25\",\"segments\":\"4\",\"fill\":false}]}]},{\"type\":\"Move\",\"x\":\"50\",\"y\":\"0\",\"children\":[{\"type\":\"To Line\",\"length\":\"50*10\",\"segments\":\"10\",\"offset\":\"0\",\"angle\":\"0\",\"separate\":false,\"children\":[{\"type\":\"Circle\",\"radius\":\"3\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":true},{\"type\":\"Rotate\",\"angle\":\"Pi/4\",\"children\":[{\"type\":\"Polygon\",\"radius\":\"25\",\"segments\":\"4\",\"fill\":false}]}]}]}]}]}]},{\"type\":\"Move\",\"x\":\"0\",\"y\":\"50\",\"children\":[{\"type\":\"Text\",\"width\":\"50\",\"text\":\"angle=Pi/4\",\"angle\":\"Pi/4\"}]}]",
+			"Random Text":				"[{\"type\":\"Random Text\",\"width\":\"50\",\"text\":\"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ\",\"segments\":\"8\",\"seed\":\"1\",\"angle\":\"0\"},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Move\",\"x\":\"0\",\"y\":\"-40\",\"children\":[{\"type\":\"Text\",\"width\":\"30\",\"text\":\"seed=1, segments=8\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"0\",\"y\":\"40\",\"children\":[{\"type\":\"Text\",\"width\":\"30\",\"text\":\"seed=2, angle=Pi/4\",\"angle\":\"0\"}]}]}]},{\"type\":\"Move\",\"x\":\"0\",\"y\":\"80\",\"children\":[{\"type\":\"Random Text\",\"width\":\"50\",\"text\":\"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ\",\"segments\":\"8\",\"seed\":\"2\",\"angle\":\"Pi/4\"}]}]",
+			"Number":					"[{\"type\":\"Move\",\"x\":\"0\",\"y\":\"20\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"To Line\",\"length\":\"300\",\"segments\":\"10\",\"offset\":\"0\",\"angle\":\"0\",\"separate\":false,\"children\":[{\"type\":\"Variable\",\"name\":\"A\",\"value\":\"I\"},{\"type\":\"Rotate\",\"angle\":\"-Pi/2\",\"children\":[{\"type\":\"Number\",\"width\":\"15\",\"expression\":\"\\\"id=\\\"+val(\\\"A\\\")\"}]}]}]}]},{\"type\":\"Number\",\"width\":\"20\",\"expression\":\"\\\"Sin(\\\"+(floor((Time+0.005)*100)/100)+\\\")=\\\"+floor((sin(Time)+0.001)*10000)/10000\"}]",
+			"Line":						"[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"-50\"},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Circle\",\"radius\":\"3\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":true},{\"type\":\"Move\",\"x\":\"100\",\"y\":\"-50\",\"children\":[{\"type\":\"Circle\",\"radius\":\"3\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":true},{\"type\":\"Rotate\",\"angle\":\"tan(-50/100)\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"}]}]}]}]}]",
+			"Circle":					"[{\"type\":\"Circle\",\"radius\":\"100\",\"angle A\":\"Pi+sin(Time)*Pi/2\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Rotate\",\"angle\":\"Pi/2+sin(Time)*Pi/2\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"100\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"100\",\"dx\":\"10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"100\",\"dx\":\"-10\",\"dy\":\"-10\"}]},{\"type\":\"Rotate\",\"angle\":\"Pi+Pi/2+sin(Time)*Pi/4\",\"children\":[{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"}]},{\"type\":\"Move\",\"x\":\"5\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"angle B = Pi*2\",\"angle\":\"0\"}]},{\"type\":\"Rotate\",\"angle\":\"Pi+sin(Time)*Pi/2\",\"children\":[{\"type\":\"Move\",\"x\":\"5\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"angle A =\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"60\",\"y\":\"-3\",\"children\":[{\"type\":\"Number\",\"width\":\"7\",\"expression\":\"floor((Pi+sin(Time)*Pi/2)*10000)/10000\"}]}]}]}]}]",
+			"Ellipse":					"[{\"type\":\"Ellipse\",\"radius A\":\"100\",\"radius B\":\"80+sin(Time)*20\",\"angle A\":\"Pi+sin(Time)*Pi/2\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"80+sin(Time)*20\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"80+sin(Time)*20\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"80+sin(Time)*20\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"100\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"100\",\"dx\":\"10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"100\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Move\",\"x\":\"25+sin(Time)*20\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius A\",\"angle\":\"0\"}]},{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"Move\",\"x\":\"20\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius B\",\"angle\":\"0\"}]}]},{\"type\":\"Rotate\",\"angle\":\"3*Pi/2+sin(Time)*Pi/2\",\"children\":[{\"type\":\"Transparent\",\"children\":[{\"type\":\"Width\",\"width\":\"8\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-5\",\"dx\":\"50\",\"dy\":\"0\"}]}]},{\"type\":\"Move\",\"x\":\"3\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"angle=\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"36\",\"y\":\"-3\",\"children\":[{\"type\":\"Number\",\"width\":\"6\",\"expression\":\"floor((Pi+sin(Time)*Pi/2)*1000)/1000\"}]},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100*(80+sin(Time)*20)/pow(pow(100*sin(Pi+sin(Time)*Pi/2),2)+pow((80+sin(Time)*20)*cos(Pi+sin(Time)*Pi/2),2),0.5)\",\"dy\":\"0\"},{\"type\":\"Move\",\"x\":\"100*(80+sin(Time)*20)/pow(pow(100*sin(Pi+sin(Time)*Pi/2),2)+pow((80+sin(Time)*20)*cos(Pi+sin(Time)*Pi/2),2),0.5)\",\"y\":\"0\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"}]}]}]}]}]",
+			"Letters Circle":			"[{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Move\",\"x\":\"25\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius\",\"angle\":\"0\"}]},{\"type\":\"Circle\",\"radius\":\"100\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"To Circle\",\"radius\":\"120\",\"segments\":\"16\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"separate\":false,\"children\":[{\"type\":\"Number\",\"width\":\"10\",\"expression\":\"I+1\"}]}]}]},{\"type\":\"Letters Circle\",\"radius\":\"100\",\"width\":\"10\",\"text\":\"Text  \",\"segments\":\"16\",\"angle\":\"0\"}]",
+			"Letters Ellipse":			"[{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Move\",\"x\":\"25\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius A\",\"angle\":\"0\"}]},{\"type\":\"Rotate\",\"angle\":\"-Pi/2\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"50\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"50\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"50\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Move\",\"x\":\"-5\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius B\",\"angle\":\"0\"}]}]},{\"type\":\"Move\",\"x\":\"0\",\"y\":\"-10\",\"children\":[{\"type\":\"To Ellipse\",\"radius A\":\"100\",\"radius B\":\"50\",\"segments\":\"16\",\"angle A\":\"time\",\"angle B\":\"Pi*2\",\"separate\":false,\"children\":[{\"type\":\"Number\",\"width\":\"10\",\"expression\":\"I+1\"}]}]},{\"type\":\"Ellipse\",\"radius A\":\"50\",\"radius B\":\"100\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false}]}]},{\"type\":\"Letters Ellipse\",\"radius A\":\"100\",\"radius B\":\"50\",\"width\":\"10\",\"text\":\"Text  \",\"segments\":\"16\",\"angle\":\"Time\"}]",
+			"Random Letters Circle":	"[{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Move\",\"x\":\"25\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius\",\"angle\":\"0\"}]},{\"type\":\"To Circle\",\"radius\":\"110\",\"segments\":\"16\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"separate\":false,\"children\":[{\"type\":\"Number\",\"width\":\"10\",\"expression\":\"I+1\"}]},{\"type\":\"Circle\",\"radius\":\"100\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false}]}]},{\"type\":\"Random Letters Circle\",\"radius\":\"100\",\"width\":\"10\",\"segments\":\"16\",\"text\":\"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ\",\"seed\":\"floor(secs*2-0.5)\",\"angle\":\"Time\"}]",
+			"Polygon":					"[{\"type\":\"Polygon\",\"radius\":\"100\",\"segments\":\"5+floor(sin(Time*4)*2)\",\"fill\":false},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Rotate\",\"angle\":\"-Pi/2\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Move\",\"x\":\"20\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"10\",\"text\":\"radius\",\"angle\":\"0\"}]},{\"type\":\"To Circle\",\"radius\":\"105\",\"segments\":\"5+floor(sin(Time*4)*2)\",\"angle A\":\"Pi*2/(5+floor(sin(Time*4)*2))\",\"angle B\":\"Pi*2\",\"separate\":false,\"children\":[{\"type\":\"Number\",\"width\":\"25\",\"expression\":\"I+1\"}]}]}]}]}]",
+			"Radial Circle":			"[{\"type\":\"Radial Circle\",\"radius A\":\"100\",\"radius B\":\"150\",\"segments\":\"16\",\"angle A\":\"0\",\"angle B\":\"Pi*2\"},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"150\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"150\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"150\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Rotate\",\"angle\":\"-Pi/2-Pi/4\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"100\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"100\",\"dx\":\"10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"100\",\"dx\":\"-10\",\"dy\":\"-10\"}]},{\"type\":\"Move\",\"x\":\"25\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius B\",\"angle\":\"0\"}]},{\"type\":\"Rotate\",\"angle\":\"-Pi/2+Pi/4\",\"children\":[{\"type\":\"Move\",\"x\":\"25\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"radius A\",\"angle\":\"0\"}]}]},{\"type\":\"Circle\",\"radius\":\"100\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"Circle\",\"radius\":\"150\",\"angle A\":\"0\",\"angle B\":\"Pi*2\",\"fill\":false},{\"type\":\"To Circle\",\"radius\":\"120\",\"segments\":\"16\",\"angle A\":\"3*Pi/64\",\"angle B\":\"Pi*2\",\"separate\":false,\"children\":[{\"type\":\"Number\",\"width\":\"10\",\"expression\":\"I+1\"}]}]}]}]",
+			"Star":						"[{\"type\":\"Star\",\"width\":\"100\",\"height A\":\"120\",\"height B\":\"80\"},{\"type\":\"Width\",\"width\":\"1\",\"children\":[{\"type\":\"Color RGB\",\"red\":\"1\",\"green\":\"0\",\"blue\":\"0\",\"alpha\":\"1\",\"children\":[{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"100\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"100\",\"y\":\"0\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"80\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"80\",\"dx\":\"10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"80\",\"dx\":\"-10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"0\",\"dy\":\"-120\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-120\",\"dx\":\"10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"-120\",\"dx\":\"-10\",\"dy\":\"10\"},{\"type\":\"Line\",\"x\":\"0\",\"y\":\"0\",\"dx\":\"-100\",\"dy\":\"0\"},{\"type\":\"Line\",\"x\":\"-100\",\"y\":\"0\",\"dx\":\"10\",\"dy\":\"-10\"},{\"type\":\"Line\",\"x\":\"-100\",\"y\":\"0\",\"dx\":\"10\",\"dy\":\"10\"},{\"type\":\"Move\",\"x\":\"20\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"width\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"-50\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"width\",\"angle\":\"0\"}]},{\"type\":\"Rotate\",\"angle\":\"Pi/2\",\"children\":[{\"type\":\"Move\",\"x\":\"5\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"height B\",\"angle\":\"0\"}]},{\"type\":\"Move\",\"x\":\"-55\",\"y\":\"-5\",\"children\":[{\"type\":\"Text\",\"width\":\"6\",\"text\":\"height A\",\"angle\":\"0\"}]}]}]}]}]]"
 		}
 	</script>
 
@@ -226,25 +199,29 @@
 		<div id="addMenu">
 			<label>modifiers</label>
 			<button class="remove" onclick="showAdd()"></button>
-			<button onclick="addN('Variable')"				>Variable</button>
-			<button onclick="addN('Move')"					>Move</button>
-			<button onclick="addN('Rotate')"				>Rotate</button>
-			<button onclick="addN('Transparent')"			>Transparent</button>
-			<button onclick="addN('Color RGB')"				>Color RGBA</button>
-			<button onclick="addN('Color HSV')"				>Color HSVA</button>
-			<button onclick="addN('Width')"					>Width</button>
-			<button onclick="addN('To Circle')"				>To circle</button>
-			<button onclick="addN('To Ellipse')"			>To ellipse</button>
-			<button onclick="addN('To Line')"				>To line</button>
+			<button onclick="addN('Variable')"		>Variable</button>
+			<button onclick="addN('Move')"			>Move</button>
+			<button onclick="addN('Rotate')"		>Rotate</button>
+			<button onclick="addN('Transparent')"	>Transparent</button>
+			<button onclick="addN('Color RGB')"		>Color RGBA</button>
+			<button onclick="addN('Color HSV')"		>Color HSVA</button>
+			<button onclick="addN('Width')"			>Width</button>
+			<button onclick="addN('To Circle')"		>To circle</button>
+			<button onclick="addN('To Ellipse')"	>To ellipse</button>
+			<button onclick="addN('To Line')"		>To line</button>
+			<button onclick="addN('Function')"		>Function</button>
 			<label>simple</label>
-			<button onclick="addN('Text')"					>Text</button>
-			<button onclick="addN('Random Text')"			>Random text</button>
-			<button onclick="addN('Number')"				>Number</button>
-			<button onclick="addN('Line')"					>Line</button>
-			<button onclick="addN('Circle')"				>Circle</button>
-			<button onclick="addN('Ellipse')"				>Ellipse</button>
-			<button onclick="addN('Polygon')"				>Polygon</button>
-			<button onclick="addN('Image')" 				>Image</button>
+			<button onclick="addN('Text')"			>Text</button>
+			<button onclick="addN('Random Text')"	>Random text</button>
+			<button onclick="addN('Number')"		>Number</button>
+			<button onclick="addN('Line')"			>Line</button>
+			<button onclick="addN('Circle')"		>Circle</button>
+			<button onclick="addN('Ellipse')"		>Ellipse</button>
+			<button onclick="addN('Polygon')"		>Polygon</button>
+			<button onclick="addN('Image')" 		>Image</button>
+			<button onclick="addN('Star')"	 		>Star</button>
+			<button onclick="addN('Note')"	 		>Note</button>
+			<button onclick="addN('Custom line')"	>Custom line</button>
 			<label>circles</label>
 			<button onclick="addN('Letters Circle')"		>Letters circle</button>
 			<button onclick="addN('Letters Ellipse')"		>Letters ellipse</button>
@@ -260,7 +237,7 @@
 			<hr>
 			<button id="show" onclick="show()">edit</button>
 			<button id="clear"   onclick="clr();compile()">clear</button>
-			<input  id="shareInout" type="text" name="share" value='[{"type":"Width","width":"20","children":[{"type":"Circle","radius":"80","angle A":"0","angle B":"Pi*2","fill":false}]},{"type":"Width","width":"5","children":[{"type":"Circle","radius":"50","angle A":"0","angle B":"Pi*2","fill":false}]},{"type":"Move","x":"0","y":"0","children":[{"type":"Random Text","width":"70","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"secs","angle":"0"}]},{"type":"Transparent","children":[{"type":"Width","width":"1","children":[{"type":"Rotate","angle":"Pi/4+Time","children":[{"type":"Radial Circle","radius A":"80-20","radius B":"80+20","segments":"4","angle A":"0","angle B":"Pi*2"}]}]}]},{"type":"Width","width":"7","children":[{"type":"Circle","radius":"200","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":"185","angle A":"0","angle B":"Pi*2","fill":false}]},{"type":"Width","width":"2","children":[{"type":"Circle","radius":"250","angle A":"0","angle B":"Pi*2","fill":false}]},{"type":"Rotate","angle":"Time","children":[{"type":"Random Letters Circle","radius":"60","width":"10","segments":"20","text":"αβγδεζηθικλμνξοπρστυφχψω ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(secs*2-0.5)","angle":"0"}]},{"type":"Rotate","angle":"-Time","children":[{"type":"Random Letters Circle","radius":"140","width":"10","segments":"100","text":"αβγδεζηθικλμνξοπρστυφχψω","seed":"floor(secs*2-0.5)","angle":"0"}]},{"type":"Rotate","angle":"Time","children":[{"type":"To Circle","is alternately":false,"radius":"140","segments":"4","angle A":"0","angle B":"Pi*2","children":[{"type":"Transparent","children":[{"type":"Circle","radius":"65","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Circle","radius":"65","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Width","width":"2","children":[{"type":"Circle","radius":"50","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":"40","angle A":"0","angle B":"Pi*2","fill":false},{"type":"To Circle","is alternately":false,"radius":"44","segments":"4","angle A":"Time/2","angle B":"Pi*2","children":[{"type":"Move","x":"-10","y":"0","children":[{"type":"Random Text","width":"10","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"3","seed":"secs/2-I","angle":"0"}]}]},{"type":"Rotate","angle":"-Time","children":[{"type":"Letters Circle","radius":"30","width":"10","text":"αβγδεζ      ","segments":"4","angle":"0"}]},{"type":"Random Text","width":"40","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"secs*4+I","angle":"0"}]}]},{"type":"To Circle","is alternately":false,"radius":"205","segments":"4","angle A":"0","angle B":"Pi*2","children":[{"type":"Transparent","children":[{"type":"Ellipse","radius A":"20","radius B":"10","angle":"0","fill":true}]}]}]},{"type":"Width","width":"1","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","children":[{"type":"Circle","radius":"130","angle A":"0","angle B":"Pi*2","fill":false}]}]},{"type":"Width","width":"1","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","children":[{"type":"Polygon","radius":"215","segments":"3","max":"-1"},{"type":"Rotate","angle":"Pi/3","children":[{"type":"Polygon","radius":"130","segments":"3","max":"-1"}]},{"type":"Rotate","angle":"-Time","children":[{"type":"Polygon","radius":"130","segments":"6","max":"-1"}]},{"type":"Rotate","angle":"Pi/6","children":[{"type":"To Circle","is alternately":false,"radius":"0","segments":"3","angle A":"0","angle B":"Pi*2","children":[{"type":"Circle","radius":"215","angle A":"0","angle B":"Pi/3","fill":false}]},{"type":"To Circle","is alternately":false,"radius":"215","segments":"3","angle A":"0","angle B":"Pi*2","children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Transparent","children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}]}]},{"type":"Rotate","angle":"Time","children":[{"type":"Width","width":"1","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","children":[{"type":"Radial Circle","radius A":"50","radius B":"100","segments":"4","angle A":"0","angle B":"Pi*2"},{"type":"Radial Circle","radius A":"182","radius B":"250","segments":"8","angle A":"0","angle B":"Pi*2"}]}]},{"type":"Rotate","angle":"0.37","children":[{"type":"Random Letters Circle","radius":"225","width":"30","segments":"8","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(secs*2-0.5)","angle":"0"}]}]},{"type":"Rotate","angle":"-Time","children":[{"type":"Random Letters Circle","radius":"300","width":"20","segments":"64","text":"▖▗▘▙▚▛▜▝▞▟■","seed":"secs*6","angle":"0"}]}]'>
+			<input  id="shareInout" type="text" name="share" value='[{"type":"Width","width":"20","children":[{"type":"Circle","radius":"80","angle A":"0","angle B":"Pi*2","fill":false}]},{"type":"Width","width":"5","children":[{"type":"Circle","radius":"50","angle A":"0","angle B":"Pi*2","fill":false}]},{"type":"Move","x":"0","y":"0","children":[{"type":"Random Text","width":"70","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"secs","angle":"0"}]},{"type":"Transparent","children":[{"type":"Width","width":"1","children":[{"type":"Rotate","angle":"Pi/4+Time","children":[{"type":"Radial Circle","radius A":"80-20","radius B":"80+20","segments":"4","angle A":"0","angle B":"Pi*2"}]}]}]},{"type":"Width","width":"7","children":[{"type":"Circle","radius":"200","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":"185","angle A":"0","angle B":"Pi*2","fill":false}]},{"type":"Width","width":"2","children":[{"type":"Circle","radius":"250","angle A":"0","angle B":"Pi*2","fill":false}]},{"type":"Rotate","angle":"Time","children":[{"type":"Random Letters Circle","radius":"60","width":"10","segments":"20","text":"αβγδεζηθικλμνξοπρστυφχψω ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(secs*2-0.5)","angle":"0"}]},{"type":"Rotate","angle":"-Time","children":[{"type":"Random Letters Circle","radius":"140","width":"10","segments":"100","text":"αβγδεζηθικλμνξοπρστυφχψω","seed":"floor(secs*2-0.5)","angle":"0"}]},{"type":"Rotate","angle":"Time","children":[{"type":"To Circle","separate":false,"radius":"140","segments":"4","angle A":"0","angle B":"Pi*2","children":[{"type":"Transparent","children":[{"type":"Circle","radius":"65","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Circle","radius":"65","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Width","width":"2","children":[{"type":"Circle","radius":"50","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":"40","angle A":"0","angle B":"Pi*2","fill":false},{"type":"To Circle","separate":false,"radius":"44","segments":"4","angle A":"Time/2","angle B":"Pi*2","children":[{"type":"Move","x":"-10","y":"0","children":[{"type":"Random Text","width":"10","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"3","seed":"secs/2-I","angle":"0"}]}]},{"type":"Rotate","angle":"-Time","children":[{"type":"Letters Circle","radius":"30","width":"10","text":"αβγδεζ      ","segments":"4","angle":"0"}]},{"type":"Random Text","width":"40","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"secs*4+I","angle":"0"}]}]},{"type":"To Circle","separate":false,"radius":"205","segments":"4","angle A":"0","angle B":"Pi*2","children":[{"type":"Transparent","children":[{"type":"Ellipse","radius A":"20","radius B":"10","angle":"0","fill":true}]}]}]},{"type":"Width","width":"1","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","children":[{"type":"Circle","radius":"130","angle A":"0","angle B":"Pi*2","fill":false}]}]},{"type":"Width","width":"1","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","children":[{"type":"Polygon","radius":"215","segments":"3","max":"-1"},{"type":"Rotate","angle":"Pi/3","children":[{"type":"Polygon","radius":"130","segments":"3","max":"-1"}]},{"type":"Rotate","angle":"-Time","children":[{"type":"Polygon","radius":"130","segments":"6","max":"-1"}]},{"type":"Rotate","angle":"Pi/6","children":[{"type":"To Circle","separate":false,"radius":"0","segments":"3","angle A":"0","angle B":"Pi*2","children":[{"type":"Circle","radius":"215","angle A":"0","angle B":"Pi/3","fill":false}]},{"type":"To Circle","separate":false,"radius":"215","segments":"3","angle A":"0","angle B":"Pi*2","children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Transparent","children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}]}]},{"type":"Rotate","angle":"Time","children":[{"type":"Width","width":"1","children":[{"type":"Color RGB","red":"1","green":"1","blue":"1","alpha":"0.5","children":[{"type":"Radial Circle","radius A":"50","radius B":"100","segments":"4","angle A":"0","angle B":"Pi*2"},{"type":"Radial Circle","radius A":"182","radius B":"250","segments":"8","angle A":"0","angle B":"Pi*2"}]}]},{"type":"Rotate","angle":"0.37","children":[{"type":"Random Letters Circle","radius":"225","width":"30","segments":"8","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(secs*2-0.5)","angle":"0"}]}]},{"type":"Rotate","angle":"-Time","children":[{"type":"Random Letters Circle","radius":"300","width":"20","segments":"64","text":"▖▗▘▙▚▛▜▝▞▟■","seed":"secs*6","angle":"0"}]}]'>
 			<button id="import" onclick="imp()">import</button>
 			<hr>
 			<button id="generate" onclick="generate()">generate</button>
@@ -271,7 +248,7 @@
 			<label class="sub">Y</label>			<input id="translateY"	type="range" name="translateY"	oninput="controlsUpdate(this)" min="-1" max="1"   step="0.05" value="0">
 			<label class="sub">Skew x</label>		<input id="skewX"		type="range" name="skewX"		oninput="controlsUpdate(this)" min="-1" max="1"   step="0.1"  value="0">
 			<label class="sub">Skew y</label>		<input id="skewY"		type="range" name="skewY"		oninput="controlsUpdate(this)" min="-1" max="1"   step="0.1"  value="0">
-			<label class="sub">Scale</label>		<input id="scale"		type="range" name="scale"		oninput="controlsUpdate(this)" min="0"  max="5"   step="0.1"  value="1">
+			<label class="sub">Scale</label>		<input id="scale"		type="range" name="scale"		oninput="controlsUpdate(this)" min="0"  max="5"   step="0.05" value="1">
 			<hr><label class="sub">Glow</label>
 			<label class="sub">radius</label>		<input id="glowR"		type="range" name="glowR"		oninput="controlsUpdate(this)" min="0"  max="50"  step="0.1"  value="9">
 			<label class="sub">color</label>		<input id="glowC"		type="range" name="glowC"		oninput="controlsUpdate(this)" min="0"  max="1"   step="0.05" value="0.66">
@@ -282,35 +259,27 @@
 	</div>
 	<button id="infoButton" onclick="showInfo()">i</button>
 	<div id="info">
-		<select id="infoSelect" oninput="info(this)">
-			<optgroup label="modifiers">
-				<option value="move"				>move</option>
-				<option value="rotate"				>rotate</option>
-				<option value="colorHSV"			>colorHSV</option>
-				<option value="colorRGB"			>colorRGB</option>
-				<option value="width"				>width</option>
-				<option value="toCircle"			>to circle</option>
-				<option value="toLine"				>to line</option>
-			</optgroup>
-			<optgroup label="simple">
-				<option value="text"				>text</option>
-				<option value="randomText"			>random text</option>
-				<option value="number"				>number</option>
-				<option value="line"				>line</option>
-				<option value="circle"				>circle</option>
-				<option value="ellipse"				>ellipse</option>
-			</optgroup>
-			<optgroup label="circles">
-				<option value="lettersCircle"		>letters crcle</option>
-				<option value="randLettersCircle"	>randLetters circle</option>
-				<option value="polygon"				>polygon</option>
-				<option value="radialCircle"		>radial circle</option>
-			</optgroup>
-		</select>
-		<div id="infoText">
-			
-		</div>
-		<img id="imgInfo" src="">
+		<button onclick="info('Transparent')"			>Transparent</button>
+		<button onclick="info('Move')"					>Move</button>
+		<button onclick="info('Rotate')"				>Rotate</button>
+		<button onclick="info('Color RGB')"				>Color RGB</button>
+		<button onclick="info('Color HSV')"				>Color HSV</button>
+		<button onclick="info('Width')"					>Width</button>
+		<button onclick="info('To Circle')"				>To Circle</button>
+		<button onclick="info('To Line')"				>To Line</button>
+		<button onclick="info('To Ellipse')"			>To Ellipse</button>
+		<button onclick="info('Text')"					>Text</button>
+		<button onclick="info('Random Text')"			>Random Text</button>
+		<button onclick="info('Number')"				>Number</button>
+		<button onclick="info('Line')"					>Line</button>
+		<button onclick="info('Circle')"				>Circle</button>
+		<button onclick="info('Ellipse')"				>Ellipse</button>
+		<button onclick="info('Letters Circle')"		>Letters Circle</button>
+		<button onclick="info('Letters Ellipse')"		>Letters Ellipse</button>
+		<button onclick="info('Random Letters Circle')"	>Random Letters Circle</button>
+		<button onclick="info('Polygon')"				>Polygon</button>
+		<button onclick="info('Radial Circle')"			>Radial Circle</button>
+		<button onclick="info('Star')"					>Star</button>
 	</div>
 	<img id="img" src="">
 	<script type="text/javascript" src="gpu-browser.min.js"></script>

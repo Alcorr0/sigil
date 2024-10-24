@@ -67,13 +67,13 @@ function graphLines(a, b) {
 		//lines
 		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"Line","x":"10","y":"10*sin(Time+I/2)","dx":len-20,"dy":"0"},{"type":"Line","x":"10","y":"-10*sin(Time+(I-1)/2)","dx":len-20,"dy":"0"}],
 		//ladder
-		[{"type":"Line","x":"0","y":"10","dx":len,"dy":"0"},{"type":"Line","x":"0","y":"-10","dx":len,"dy":"0"},{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":s*20,"segments":s,"offset":"1","angle":"0","is alternately":false,"children":[{"type":"Line","x":"-10","y":-(len-s*20)/2,"dx":"20","dy":"0"}]}]},{"type":"Move","x":10+(len-s*20)/2,"y":"0","children":[{"type":"Random Text","width":"20","text":"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":s,"seed":"Secs+I","angle":"Pi/2"}]}],
+		[{"type":"Line","x":"0","y":"10","dx":len,"dy":"0"},{"type":"Line","x":"0","y":"-10","dx":len,"dy":"0"},{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":s*20,"segments":s,"offset":"1","angle":"0","separate":false,"children":[{"type":"Line","x":"-10","y":-(len-s*20)/2,"dx":"20","dy":"0"}]}]},{"type":"Move","x":10+(len-s*20)/2,"y":"0","children":[{"type":"Random Text","width":"20","text":"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":s,"seed":"Secs+I","angle":"Pi/2"}]}],
 		//chain
-		[{"type":"Rotate","angle":"Pi/2","children":[{"type":"Move","x":"0","y":"-10","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","is alternately":false,"children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":"4*(nsin(Time+I))","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}],
+		[{"type":"Rotate","angle":"Pi/2","children":[{"type":"Move","x":"0","y":"-10","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","separate":false,"children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":"4*(nsin(Time+I))","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}],
 		//dna
-		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","is alternately":false,"children":[{"type":"Move","x":"10*sin(Time+I/4)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Move","x":"-10*sin(Time+(I-1)/4)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}],
+		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","separate":false,"children":[{"type":"Move","x":"10*sin(Time+I/4)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Move","x":"-10*sin(Time+(I-1)/4)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}],
 		//dna lines
-		[{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s*2,"offset":"0","angle":"0","is alternately":false,"children":[{"type":"Line","x":"-10*sin(Time+I/4)","y":"0","dx":"20*sin(Time+(I-1)/4)","dy":"0"}]}]}]
+		[{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s*2,"offset":"0","angle":"0","separate":false,"children":[{"type":"Line","x":"-10*sin(Time+I/4)","y":"0","dx":"20*sin(Time+(I-1)/4)","dy":"0"}]}]}]
 	];
 	var line = lines[Math.floor(Math.random()*lines.length)];
 	
@@ -97,10 +97,10 @@ function circlesPattern(ra,rb,d,c) {
 	var z = [];
 	if(segm<5)
 		z = {"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[
-			{"type":"To Circle","radius":"0","segments":segmt,"angle A":"Time*"+(Math.random()*4-2),"angle B":"Pi*2","is alternately":false,"children":[
+			{"type":"To Circle","radius":"0","segments":segmt,"angle A":"Time*"+(Math.random()*4-2),"angle B":"Pi*2","separate":false,"children":[
 				{"type":"Circle","radius":c,"angle A":"0","angle B":"Pi/2/"+segmt,"fill":false}
 			]},
-			{"type":"To Circle","radius":c,"segments":segm,"angle A":"0","angle B":"Pi*2","is alternately":false,"children":[
+			{"type":"To Circle","radius":c,"segments":segm,"angle A":"0","angle B":"Pi*2","separate":false,"children":[
 				{"type":"Transparent","children":[
 					{"type":"Circle","radius":d/2,"angle A":"0","angle B":"Pi*2","fill":true}
 				]},
@@ -110,7 +110,7 @@ function circlesPattern(ra,rb,d,c) {
 		]};
 	else
 		z = {"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[
-			{"type":"To Circle","radius":c,"segments":segm,"angle A":"0","angle B":"Pi*2","is alternately":false,"children":[
+			{"type":"To Circle","radius":c,"segments":segm,"angle A":"0","angle B":"Pi*2","separate":false,"children":[
 				{"type":"Transparent","children":[
 					{"type":"Circle","radius":d/2,"angle A":"0","angle B":"Pi*2","fill":true}
 				]},
@@ -126,8 +126,8 @@ function graphCenter() {
 	const centers = [
 		// цветок
 		[
-			{"type":"To Circle","radius":"25","segments":Math.floor(4+6*Math.random()),"angle A":"Time*"+rna,"angle B":"Pi*2","is alternately":false,"children":[{"type":"Circle","radius":"25","angle A":"-Pi/2","angle B":"Pi/2","fill":false}]},
-			{"type":"To Circle","radius":"25","segments":Math.floor(4+6*Math.random()),"angle A":"-Time*"+rna,"angle B":"Pi*2","is alternately":false,"children":[{"type":"Circle","radius":"25","angle A":"Pi/2","angle B":"3*Pi/2","fill":false}]}
+			{"type":"To Circle","radius":"25","segments":Math.floor(4+6*Math.random()),"angle A":"Time*"+rna,"angle B":"Pi*2","separate":false,"children":[{"type":"Circle","radius":"25","angle A":"-Pi/2","angle B":"Pi/2","fill":false}]},
+			{"type":"To Circle","radius":"25","segments":Math.floor(4+6*Math.random()),"angle A":"-Time*"+rna,"angle B":"Pi*2","separate":false,"children":[{"type":"Circle","radius":"25","angle A":"Pi/2","angle B":"3*Pi/2","fill":false}]}
 		],
 		// буква
 		[
@@ -135,7 +135,7 @@ function graphCenter() {
 			{"type":"Random Text","width":"40","text":"ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":"1","seed":"Secs+"+Math.floor(Math.random()*10),"angle":"0"}
 		],
 		// пульс
-		[{"type":"To Circle","radius":"0","segments":rnb,"angle A":"0","angle B":"Pi*2","is alternately":false,"children":[{"type":"Polygon","radius":"50*(nsin(Time*"+Math.ceil(Math.random()*2)+"+2*Pi/"+rnb+"*I))","segments":"4","max":"-1"}]}],
+		[{"type":"To Circle","radius":"0","segments":rnb,"angle A":"0","angle B":"Pi*2","separate":false,"children":[{"type":"Polygon","radius":"50*(nsin(Time*"+Math.ceil(Math.random()*2)+"+2*Pi/"+rnb+"*I))","segments":"4","max":"-1"}]}],
 		// луна
 		[{"type":"Rotate","angle":"Time/4+sin(Time/"+Math.max(Math.random(),0.2)+")*cos(Time*"+Math.max(Math.random(),0.2)+")","children":[{"type":"Width","width":"1","children":[{"type":"Move","x":"0","y":"-25","children":[{"type":"Circle","radius":"25","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Letters Circle","radius":"20","width":"5","text":"     ١ࢴ٤٧؇٦٩چ٢ۍ٨٥    ","segments":"1","angle":"Pi"}]},{"type":"Move","x":"0","y":"-15","children":[{"type":"Circle","radius":"30","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Letters Circle","radius":"34","width":"5","text":"     ﴾١ࢴ٤٧؇٦٣؏٩چ٢ۍ٨ێ٥ࢳ﴿    ","segments":"1","angle":"0"}]},{"type":"Transparent","children":[{"type":"Width","width":"9","children":[{"type":"Circle","radius":"50-9/2","angle A":"4","angle B":"-0.8","fill":false}]}]},{"type":"Move","x":"0","y":"30","children":[{"type":"Polygon","radius":"10","segments":"3","max":"-1"}]}]},{"type":"Move","x":"-6","y":"40","children":[{"type":"Text","width":"5","text":"﴾۞ ﴿","angle":"0"}]}]},{"type":"Circle","radius":"50","angle A":"0","angle B":"Pi*2","fill":false}],
 		// затмение
@@ -167,11 +167,11 @@ function graphCircle(ra, rb) {
 		],
 		[// only thick
 			// фазы луны
-			{"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[{"type":"To Circle","radius":c,"segments":rnb*2,"angle A":"0","angle B":"Pi*2","is alternately":false,"children":[{"type":"Circle","radius":"7","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"To Circle","radius":c,"segments":rnb*2-1,"angle A":"Time/32","angle B":"Pi*2","is alternately":false,"children":[{"type":"Move","x":"0","y":"0","children":[{"type":"Transparent","children":[{"type":"Circle","radius":"6","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}]},
+			{"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[{"type":"To Circle","radius":c,"segments":rnb*2,"angle A":"0","angle B":"Pi*2","separate":false,"children":[{"type":"Circle","radius":"7","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"To Circle","radius":c,"segments":rnb*2-1,"angle A":"Time/32","angle B":"Pi*2","separate":false,"children":[{"type":"Move","x":"0","y":"0","children":[{"type":"Transparent","children":[{"type":"Circle","radius":"6","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}]},
 			// лучи с буквами
 			{"type":"Rotate","angle":"Time*"+(Math.random()*8-4),"children":[{"type":"Radial Circle","radius A":ra,"radius B":rb,"segments":"16","angle A":"0","angle B":"Pi*2"},{"type":"Rotate","angle":"Pi/16","children":[{"type":"Random Letters Circle","radius":c,"width":d/2,"segments":"16","text":"αβγδεζηθικλμνξοπρστυφχψω ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","seed":"floor(Secs*2-0.5)","angle":"0"}]}]},
 			// цветки
-			{"type":"Width","width":"1","children":[{"type":"To Circle","radius":c,"segments":Math.floor(Math.random()*2*Math.PI*c/d),"angle A":"-Time*"+rna+"/2","angle B":"Pi*2","is alternately":false,"children":[{"type":"Circle","radius":d/2,"angle A":"-Pi/2","angle B":"Pi/2","fill":false}]},{"type":"To Circle","radius":c,"segments":Math.floor(Math.random()*2*Math.PI*c/d),"angle A":"Time*"+rna+"/2","angle B":"Pi*2","is alternately":false,"children":[{"type":"Circle","radius":d/2,"angle A":"Pi/2","angle B":"3*Pi/2","fill":false}]},{"type":"Circle","radius":rb,"angle A":"0","angle B":"Pi*2","fill":false}]},
+			{"type":"Width","width":"1","children":[{"type":"To Circle","radius":c,"segments":Math.floor(Math.random()*2*Math.PI*c/d),"angle A":"-Time*"+rna+"/2","angle B":"Pi*2","separate":false,"children":[{"type":"Circle","radius":d/2,"angle A":"-Pi/2","angle B":"Pi/2","fill":false}]},{"type":"To Circle","radius":c,"segments":Math.floor(Math.random()*2*Math.PI*c/d),"angle A":"Time*"+rna+"/2","angle B":"Pi*2","separate":false,"children":[{"type":"Circle","radius":d/2,"angle A":"Pi/2","angle B":"3*Pi/2","fill":false}]},{"type":"Circle","radius":rb,"angle A":"0","angle B":"Pi*2","fill":false}]},
 			// кольцо с рандомным количеством тонких кругов
 			circlesPattern(ra,rb,d,c),
 
@@ -189,13 +189,13 @@ function graphCircleBack(r) {
 		// многоугольники
 		[{"type":"Circle","radius":r,"angle A":"0","angle B":"Pi*2","fill":false},{"type":"Rotate","angle":"Pi/3","children":[{"type":"Polygon","radius":r,"segments":"3","max":"-1"}]},{"type":"Rotate","angle":"-Time","children":[{"type":"Polygon","radius":r,"segments":"6","max":"-1"}]}],
 		// тот треугольник
-		[{"type":"Polygon","radius":r,"segments":"3","max":"-1"},{"type":"Rotate","angle":"Pi/6","children":[{"type":"To Circle","is alternately":false,"radius":"0","segments":"3","angle A":"0","angle B":"Pi*2","children":[{"type":"Circle","radius":r,"angle A":"0","angle B":"Pi/3","fill":false}]},{"type":"To Circle","is alternately":false,"radius":r,"segments":"3","angle A":"0","angle B":"Pi*2","children":[{"type":"Transparent","children":[{"type":"Circle","radius":r/10,"angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Circle","radius":r/10,"angle A":"0","angle B":"Pi*2","fill":false}]}]}],
+		[{"type":"Polygon","radius":r,"segments":"3","max":"-1"},{"type":"Rotate","angle":"Pi/6","children":[{"type":"To Circle","separate":false,"radius":"0","segments":"3","angle A":"0","angle B":"Pi*2","children":[{"type":"Circle","radius":r,"angle A":"0","angle B":"Pi/3","fill":false}]},{"type":"To Circle","separate":false,"radius":r,"segments":"3","angle A":"0","angle B":"Pi*2","children":[{"type":"Transparent","children":[{"type":"Circle","radius":r/10,"angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Circle","radius":r/10,"angle A":"0","angle B":"Pi*2","fill":false}]}]}],
 		// спирали
-		[{"type":"To Circle","radius":"0","segments":Math.floor(1+Math.random()*3),"angle A":"0","angle B":"Pi*2","is alternately":false,"children":[{"type":"To Line","length":r*1.2,"segments":Math.floor(r/10),"offset":"1","angle":"Time*"+Math.random()*2,"is alternately":false,"children":[{"type":"Circle","radius":"5","angle A":"0","angle B":"Pi*2","fill":false}]}]}],
+		[{"type":"To Circle","radius":"0","segments":Math.floor(1+Math.random()*3),"angle A":"0","angle B":"Pi*2","separate":false,"children":[{"type":"To Line","length":r*1.2,"segments":Math.floor(r/10),"offset":"1","angle":"Time*"+Math.random()*2,"separate":false,"children":[{"type":"Circle","radius":"5","angle A":"0","angle B":"Pi*2","fill":false}]}]}],
 		// пульс круг
 		[{"type":"Circle","radius":r+"+sin(Time)*"+r/2,"angle A":"0","angle B":"Pi*2","fill":false}],
 		//экцентрик
-		[{"type":"To Circle","radius":"0","segments":seg,"angle A":"0","angle B":"Pi*2","is alternately":false,"children":[{"type":"Circle","radius":r+"*(nsin(Time+2*Pi*I/"+seg+"))","angle A":"0","angle B":"Pi*2","fill":false}]}]
+		[{"type":"To Circle","radius":"0","segments":seg,"angle A":"0","angle B":"Pi*2","separate":false,"children":[{"type":"Circle","radius":r+"*(nsin(Time+2*Pi*I/"+seg+"))","angle A":"0","angle B":"Pi*2","fill":false}]}]
 	];
 
 	var line = [];

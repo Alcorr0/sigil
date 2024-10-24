@@ -70,7 +70,7 @@ function elementParse(element) {
 				parse(element["segments"]),
 				element["angle A"]?parse(element["angle A"]):0,
 				element["angle B"]?parse(element["angle B"]):Math.PI*2,
-				function(){arrParse(element["children"], element["is alternately"])}
+				function(){arrParse(element["children"], element["separate"])}
 			);
 		}
 	break;
@@ -81,7 +81,7 @@ function elementParse(element) {
 				parse(element["segments"]),
 				parse(element["offset"]),
 				parse(element["angle"]),
-				function(){arrParse(element["children"], element["is alternately"])}
+				function(){arrParse(element["children"], element["separate"])}
 			);
 		}
 	break;
@@ -93,7 +93,17 @@ function elementParse(element) {
 				parse(element["segments"]),
 				element["angle A"]?parse(element["angle A"]):0,
 				element["angle B"]?parse(element["angle B"]):Math.PI*2,
-				function(){arrParse(element["children"], element["is alternately"])}
+				function(){arrParse(element["children"], element["separate"])}
+			);
+		}
+	break;
+	case "Function":
+		if(element["children"]) {
+			fun(
+				parse(element["from"]),
+				parse(element["to"]),
+				parse(element["segments"]),
+				function(){arrParse(element["children"], element["separate"])}
 			);
 		}
 	break;
@@ -209,8 +219,39 @@ function elementParse(element) {
 			element["front"]
 		);
 	break;
+	case "Star":
+		star(
+			parse(element["width"]),
+			parse(element["height A"]),
+			parse(element["height B"])
+		);
+	break;
+	case "Note":
+		note(
+			parse(element["radius"]),
+			parse(element["pitch"]),
+			parse(element["height"]),
+			parse(element["note type"]),
+			parse(element["dx"]),
+			parse(element["dy"])
+		);
+	break;
+	case "Custom line":
+		customLine(
+			parse(element["from"]),
+			parse(element["to"]),
+			parse(element["segments"]),
+			function(i){return eval(element["function A"])},
+			function(i){return eval(element["function B"])},
+			element["fill"]
+		);
+	break;
 	}
 }
+
+// function evalInContext() {eval("example()")}
+
+// evalInContext.call(context);
 
 function prr(el) {
 	try {
