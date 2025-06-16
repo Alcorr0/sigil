@@ -335,12 +335,10 @@ function compile() {
 
 	json = JSON.stringify(data);
 
-	if (isStop) {
-		if (json.includes("Time") || json.includes("Secs"))
-			isStop = false;
-
+	isTime = json.includes("Time") || json.includes("Secs");
+	if (isStop && isTime)
 		window.requestAnimationFrame(draw);
-	}
+	isStop = !isTime;
 
 	exp();
 }

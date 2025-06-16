@@ -67,13 +67,13 @@ function graphLines(a, b) {
 		//lines
 		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"Line","x":"10","y":"10*sin(Time+I/2)","dx":len-20,"dy":"0"},{"type":"Line","x":"10","y":"-10*sin(Time+(I-1)/2)","dx":len-20,"dy":"0"}],
 		//ladder
-		[{"type":"Line","x":"0","y":"10","dx":len,"dy":"0"},{"type":"Line","x":"0","y":"-10","dx":len,"dy":"0"},{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":s*20,"segments":s,"offset":"1","angle":"0","separate":false,"children":[{"type":"Line","x":"-10","y":-(len-s*20)/2,"dx":"20","dy":"0"}]}]},{"type":"Move","x":10+(len-s*20)/2,"y":"0","children":[{"type":"Random Text","width":"20","text":"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":s,"seed":"Secs+I","angle":"Pi/2"}]}],
+		[{"type":"Line","x":"0","y":"10","dx":len,"dy":"0"},{"type":"Line","x":"0","y":"-10","dx":len,"dy":"0"},{"type":"To Line","length":s*20,"segments":s,"offset":"1","angle":"0","separate":false,"children":[{"type":"Line","x":(len-s*20)/2,"y":"-10","dx":"0","dy":"20"}]},{"type":"Move","x":10+(len-s*20)/2,"y":"0","children":[{"type":"Random Text","width":"20","text":"αβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ","segments":s,"seed":"Secs+I","angle":"Pi/2"}]}],
 		//chain
-		[{"type":"Rotate","angle":"Pi/2","children":[{"type":"Move","x":"0","y":"-10","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","separate":false,"children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":"4*(nsin(Time+I))","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}],
+		[{"type":"Move","x":"10","y":"0","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","separate":false,"children":[{"type":"Circle","radius":"10","angle A":"0","angle B":"Pi*2","fill":false},{"type":"Circle","radius":"4*(nsin(Time+I))","angle A":"0","angle B":"Pi*2","fill":true}]}]}],
 		//dna
-		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","separate":false,"children":[{"type":"Move","x":"10*sin(Time+I/4)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Move","x":"-10*sin(Time+(I-1)/4)","y":"-10","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]}]}]}],
+		[{"type":"Width","width":"5","children":[{"type":"Line","x":"0","y":"0","dx":len,"dy":"0"}]},{"type":"To Line","length":len,"segments":s,"offset":"0","angle":"0","separate":false,"children":[{"type":"Move","x":"10","y":"10*sin(Time+I/4)","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]},{"type":"Move","x":"10","y":"-10*sin(Time+(I-1)/4)","children":[{"type":"Circle","radius":"4","angle A":"0","angle B":"Pi*2","fill":true}]}]}],
 		//dna lines
-		[{"type":"Rotate","angle":"Pi/2","children":[{"type":"To Line","length":len,"segments":s*2,"offset":"0","angle":"0","separate":false,"children":[{"type":"Line","x":"-10*sin(Time+I/4)","y":"0","dx":"20*sin(Time+(I-1)/4)","dy":"0"}]}]}]
+		[{"type":"To Line","length":len,"segments":s*2,"offset":"0","angle":"0","separate":false,"children":[{"type":"Line","x":"0","y":"-10*sin(Time+I/4)","dx":"0","dy":"20*sin(Time+(I-1)/4)"}]}]
 	];
 	var line = lines[Math.floor(Math.random()*lines.length)];
 	

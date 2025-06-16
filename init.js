@@ -29,6 +29,7 @@ var glowB = 1;
 var fRate = 30;
 
 var isStop = false;
+var isTime = false;
 var draw;
 
 //texts

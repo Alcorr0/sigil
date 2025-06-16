@@ -45,8 +45,8 @@ draw = function() {
 	}
 //prepare
 	ctx.resetTransform();
-	ctxBack.resetTransform();
-	ctxFront.resetTransform();
+	
+	
 	ctx.fillStyle = "#000000";
 	ctx.fillStyle = "#ffffff";
 	ctx.clearRect(0, 0, res.x, res.y);
@@ -56,16 +56,7 @@ draw = function() {
 		(translateX+2.0-scale*2-skewX)*res.x/4,
 		(translateY+0.5-scale/2-skewY)*res.y
 	);
-	ctxBack.transform(
-		scale,skewY,skewX,scale,
-		(translateX+2.0-scale*2-skewX)*res.x/4,
-		(translateY+0.5-scale/2-skewY)*res.y
-	);
-	ctxFront.transform(
-		scale,skewY,skewX,scale,
-		(translateX+2.0-scale*2-skewX)*res.x/4,
-		(translateY+0.5-scale/2-skewY)*res.y
-	);
+	
 //time
 	secs += step/Math.PI*2;
 	time += step;
@@ -76,7 +67,7 @@ draw = function() {
 //json setup
 	getId();
 	
-	isStop = !(json.includes("Time") || json.includes("Secs"));
+	// isStop = !(json.includes("Time") || json.includes("Secs"));
 
 	var data = JSON.parse(json);
 
@@ -98,8 +89,22 @@ draw = function() {
 	if (isPrint)
 		runPrint();
 
-	ctxBack.clearRect(0, 0, res.x, res.y);
-	ctxFront.clearRect(0, 0, res.x, res.y);
+	ctxBack.resetTransform();
+	ctxFront.resetTransform();
+	ctxBack.clearRect( 0, 0, res.x, res.y*2);
+	ctxFront.clearRect(0, 0, res.x, res.y*2);
+	ctxBack.transform(
+		scale,skewY,skewX,scale,
+		(translateX+2.0-scale*2-skewX)*res.x/4,
+		(translateY+0.5-scale/2-skewY)*res.y
+	);
+	ctxFront.transform(
+		scale,skewY,skewX,scale,
+		(translateX+2.0-scale*2-skewX)*res.x/4,
+		(translateY+0.5-scale/2-skewY)*res.y
+	);
+
+	console.log(isStop);
 
 	if (!isStop)
 		window.requestAnimationFrame(draw);
@@ -115,7 +120,7 @@ function controlsUpdate(el) {
 	switch (el.id) {
 	case 'speed':
 		step = el.value/10;
-		if (isStop && step!=0) {
+		if (isStop && step!=0 && isTime) {
 			isStop = false;
 			window.requestAnimationFrame(draw);
 		}
@@ -136,8 +141,8 @@ function controlsUpdate(el) {
 						fRate = v;		break;
 	}
 
-	if (isStop)
-		window.requestAnimationFrame(draw);
+	// if (isStop)
+	// 	window.requestAnimationFrame(draw);
 }
 controlsUpdate(document.getElementById("speed"));
 controlsUpdate(document.getElementById("translateX"));
@@ -153,3 +158,24 @@ controlsUpdate(document.getElementById("glowB"));
 controlsUpdate(document.getElementById("fRate"));
 window.requestAnimationFrame(draw);
 imp();
+
+
+document.addEventListener("wheel", (event) => {
+	if(event.target != document.getElementById('interface')
+	&& event.target != document.getElementById('glow')) return;
+
+	event.preventDefault();
+	if(event.ctrlKey) {
+		scale += event.deltaX/res.x + event.deltaY/res.y/3;
+		document.getElementById("scale").value = scale;
+	} else {
+		translateX += event.deltaX/res.x;
+		translateY -= event.deltaY/res.y/3;
+
+		document.getElementById("translateX").value = translateX;
+		document.getElementById("translateY").value = translateY;
+	}
+
+
+	window.requestAnimationFrame(draw);
+});
